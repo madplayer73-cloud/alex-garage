@@ -8,6 +8,7 @@ import {
   normalizeRecurringKey,
   requireSession,
 } from "@/db/runtime";
+import { appUrl, notifyEmails, sendNotification } from "@/db/notifications";
 
 function cleanText(value: unknown, maxLength: number) {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
@@ -68,6 +69,13 @@ export async function POST(request: Request) {
         recurringKey,
       )
       .run();
+    await sendNotification({
+      event: "new_task",
+      to: notifyEmails.alex(),
+      subject: `Alex Garage: nová úloha od ${parent.name}`,
+      message: `${parent.name} zadal(a) novú úlohu: ${title}\nBody: ${points}\nTermín: ${dueDate}${description ? `\n\n${description}` : ""}`,
+      actionUrl: appUrl(),
+    });
     return Response.json({ id: result.meta.last_row_id }, { status: 201 });
   } catch (error) {
     return jsonError(error);
@@ -82,9 +90,23 @@ export async function PUT(request: Request) {
     const taskId = Number(form.get("taskId"));
     const note = cleanText(form.get("note"), 500);
     const task = await getD1()
-      .prepare("SELECT id, assignee_id, status, proof_required, proof_key FROM tasks WHERE id = ?")
+      .prepare(
+        `SELECT t.id, t.title, t.assignee_id, t.status, t.proof_required, t.proof_key,
+                u.name AS creator_name, u.role AS creator_role
+         FROM tasks t JOIN users u ON u.id = t.creator_id
+         WHERE t.id = ?`,
+      )
       .bind(taskId)
-      .first<{ id: number; assignee_id: number; status: string; proof_required: number; proof_key: string | null }>();
+      .first<{
+        id: number;
+        title: string;
+        assignee_id: number;
+        status: string;
+        proof_required: number;
+        proof_key: string | null;
+        creator_name: string;
+        creator_role: string;
+      }>();
     if (!task || task.assignee_id !== alex.id) return Response.json({ error: "Úloha sa nenašla." }, { status: 404 });
     if (!['open', 'rejected'].includes(task.status)) {
       return Response.json({ error: "Táto úloha už čaká na kontrolu alebo je schválená." }, { status: 409 });
@@ -117,6 +139,14 @@ export async function PUT(request: Request) {
       )
       .bind(proofKey, note, task.id)
       .run();
+    const reviewerEmail = task.creator_role === "parent_mama" ? notifyEmails.mama() : notifyEmails.otec();
+    await sendNotification({
+      event: "task_submitted",
+      to: reviewerEmail.length ? reviewerEmail : notifyEmails.parents(),
+      subject: `Alex Garage: úloha čaká na kontrolu`,
+      message: `Alex označil úlohu ako splnenú: ${task.title}\nKontroluje: ${task.creator_name}${note ? `\n\nSpráva od Alexa: ${note}` : ""}`,
+      actionUrl: appUrl(),
+    });
     return Response.json({ ok: true });
   } catch (error) {
     return jsonError(error);

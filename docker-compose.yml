@@ -14,3 +14,10 @@ services:
       - ALEX_AUTO_HOST=0.0.0.0
       - ALEX_AUTO_PORT=3000
       - ALEX_AUTO_DATA_DIR=/data
+      - ALEX_APP_URL=http://192.168.31.193:3008
+      - ALEX_EMAIL=alex.csekes@gmail.com
+      - MAMA_EMAIL=karolina.janostiakova@gmail.com
+      - OTEC_EMAIL=attila.csekes@gmail.com
+      - PARENT_EMAILS=karolina.janostiakova@gmail.com,attila.csekes@gmail.com
+      - NOTIFY_WEBHOOK_URL=
+      - NOTIFY_SECRET=

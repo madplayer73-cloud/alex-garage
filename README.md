@@ -63,3 +63,19 @@ npm start
 ```
 
 Predvolená lokálna adresa je `http://localhost:3000` a dáta sa ukladajú do priečinka `data`.
+
+## Gmail notifikacie
+
+Aplikacia vie posielat notifikacie cez Google Apps Script Web App. Ked nie je nastavene `NOTIFY_WEBHOOK_URL` alebo `NOTIFY_SECRET`, notifikacie sa potichu preskocia a aplikacia funguje dalej.
+
+Premenne v `docker-compose.yml`:
+
+- `ALEX_EMAIL`
+- `MAMA_EMAIL`
+- `OTEC_EMAIL`
+- `PARENT_EMAILS`
+- `ALEX_APP_URL`
+- `NOTIFY_WEBHOOK_URL`
+- `NOTIFY_SECRET`
+
+Notifikacie sa posielaju pri novej ulohe pre Alexa, pri novej poziadavke na peniaze pre rodicov a pri odoslani splnenej ulohy rodicovi na kontrolu.

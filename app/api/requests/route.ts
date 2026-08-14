@@ -6,6 +6,7 @@ import {
   jsonError,
   requireSession,
 } from "@/db/runtime";
+import { appUrl, notifyEmails, sendNotification } from "@/db/notifications";
 
 function text(value: unknown, length: number) {
   return typeof value === "string" ? value.trim().slice(0, length) : "";
@@ -27,6 +28,13 @@ export async function POST(request: Request) {
       .prepare("INSERT INTO money_requests (creator_id, amount_cents, purpose, note) VALUES (?, ?, ?, ?)")
       .bind(alex.id, Math.round(amount * 100), purpose, note)
       .run();
+    await sendNotification({
+      event: "money_request",
+      to: notifyEmails.parents(),
+      subject: `Alex Garage: nová požiadavka od Alexa`,
+      message: `Alex poslal požiadavku: ${amount.toFixed(2)} €\nNa čo: ${purpose}${note ? `\n\nPoznámka: ${note}` : ""}`,
+      actionUrl: appUrl(),
+    });
     return Response.json({ id: result.meta.last_row_id }, { status: 201 });
   } catch (error) {
     return jsonError(error);
@@ -100,6 +108,13 @@ export async function PATCH(request: Request) {
         )
         .bind(parent.id, created.meta.last_row_id, item.id)
         .run();
+      await sendNotification({
+        event: "new_task",
+        to: notifyEmails.alex(),
+        subject: `Alex Garage: nová podmienka od ${parent.name}`,
+        message: `${parent.name} pridal(a) podmienku k požiadavke: ${title}\nBody: ${points}\nTermín: ${dueDate}${description ? `\n\n${description}` : ""}`,
+        actionUrl: appUrl(),
+      });
       return Response.json({ ok: true });
     }
     return Response.json({ error: "Túto požiadavku už nemožno takto zmeniť." }, { status: 409 });

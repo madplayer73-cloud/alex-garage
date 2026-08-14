@@ -4,7 +4,9 @@ services:
     container_name: alex-garage
     restart: unless-stopped
     ports:
-      - "3008:3000"
+      - target: 3000
+        published: "3008"
+        protocol: tcp
     volumes:
       - ./alex-garage-data:/data
     environment:

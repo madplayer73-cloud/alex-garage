@@ -1,0 +1,11 @@
+node_modules
+dist
+.vinext
+.wrangler
+data
+alex-garage-data
+.git
+.codex-dev.*.log
+.codex-start.*.log
+.codex-serve.*.log
+npm-debug.log*

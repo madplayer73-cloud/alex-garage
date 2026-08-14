@@ -1,0 +1,14 @@
+services:
+  alex-garage:
+    build: .
+    container_name: alex-garage
+    restart: unless-stopped
+    ports:
+      - "3008:3000"
+    volumes:
+      - ./alex-garage-data:/data
+    environment:
+      - TZ=Europe/Bratislava
+      - ALEX_AUTO_HOST=0.0.0.0
+      - ALEX_AUTO_PORT=3000
+      - ALEX_AUTO_DATA_DIR=/data

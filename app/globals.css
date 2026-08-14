@@ -404,11 +404,18 @@ textarea { resize: vertical; }
 .mission-value, .review-score { align-items: center; background: var(--navy); border-radius: 11px; color: white; display: flex; justify-content: space-between; padding: .8rem 1rem; }
 .mission-value span, .review-score span { color: #aeb5b5; font-size: .62rem; font-weight: 850; letter-spacing: .1em; }
 .mission-value b, .review-score b { color: var(--yellow); }
-.upload-box { align-items: center; background: #f3f0e8; border: 1px dashed #bbb7ad; border-radius: 13px; cursor: pointer; display: flex !important; flex-direction: column; padding: 1.3rem; text-align: center; }
+.upload-box { align-items: center; background: #f3f0e8; border: 1px dashed #bbb7ad; border-radius: 13px; display: flex !important; flex-direction: column; padding: 1.3rem; text-align: center; }
 .upload-box.required { border-color: var(--red); }
 .upload-box input { height: 1px; opacity: 0; padding: 0; position: absolute; width: 1px; }
 .upload-box span { font-size: 1.6rem; }
 .upload-box small { color: var(--muted); font-weight: 500; }
+.upload-actions { display: grid; gap: .7rem; grid-template-columns: 1fr 1fr; margin-top: .9rem; width: 100%; }
+.upload-actions label { background: #fff; border: 1px solid #d8d4c9; border-radius: 10px; box-shadow: 0 4px 12px rgb(0 0 0 / 5%); color: var(--navy); cursor: pointer; font-size: .86rem; font-weight: 900; padding: .8rem; position: relative; }
+.proof-preview { align-items: center; background: #fff; border: 1px solid #ddd8cd; border-radius: 12px; display: grid; gap: .7rem; grid-template-columns: 58px 1fr auto; margin-top: .9rem; padding: .55rem; text-align: left; width: 100%; }
+.proof-preview img { border-radius: 8px; height: 58px; object-fit: cover; width: 58px; }
+.proof-preview div { display: flex; flex-direction: column; min-width: 0; }
+.proof-preview small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.proof-preview button { background: #f6e8e9; border: 0; border-radius: 8px; color: var(--red); font-size: .75rem; font-weight: 850; padding: .55rem .65rem; }
 .proof-image { border-radius: 13px; display: block; max-height: 370px; object-fit: contain; width: 100%; }
 .no-proof { background: #efede6; border-radius: 10px; color: var(--muted); font-size: .76rem; padding: 1rem; text-align: center; }
 .review-content { display: grid; gap: 1rem; }

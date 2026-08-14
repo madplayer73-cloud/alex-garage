@@ -21,7 +21,9 @@ function extensionFor(contentType: string) {
 }
 
 const allowedImageTypes = new Set([
+  "",
   "image/jpeg",
+  "image/jpg",
   "image/png",
   "image/webp",
   "image/heic",

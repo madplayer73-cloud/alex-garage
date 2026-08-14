@@ -433,7 +433,54 @@ function TaskForm({ weekEnd, busy, onSubmit }: { weekEnd: string; busy: boolean;
 }
 
 function SubmitTaskForm({ task, busy, onSubmit }: { task: Task; busy: boolean; onSubmit: (form: FormData) => void }) {
-  return <form className="modal-form" onSubmit={(event) => { event.preventDefault(); onSubmit(new FormData(event.currentTarget)); }}><input type="hidden" name="taskId" value={task.id} /><div className="mission-value"><span>ODMENA</span><b>+{task.points} {task.points === 1 ? "BOD" : "BODY"}</b></div><label>Správa rodičovi<textarea name="note" placeholder="Čo si urobil? Môžeš pridať krátku poznámku." maxLength={500} rows={3} /></label><label className={`upload-box ${task.proof_required ? "required" : ""}`}><input name="proof" type="file" accept="image/*" capture="environment" /><span>📷</span><b>{task.proof_required ? "Pridať povinnú fotografiu" : "Pridať fotografiu (voliteľné)"}</b><small>JPG, PNG alebo WebP · najviac 8 MB</small></label>{task.reviewer_comment && <div className="review-note">Rodič napísal: {task.reviewer_comment}</div>}<button className="primary-button" disabled={busy}>{busy ? "Odosielam…" : "Poslať na kontrolu →"}</button></form>;
+  const [proof, setProof] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState("");
+
+  useEffect(() => () => {
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+  }, [previewUrl]);
+
+  function setSelectedProof(file: File | null) {
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    setProof(file);
+    setPreviewUrl(file ? URL.createObjectURL(file) : "");
+  }
+
+  return (
+    <form
+      className="modal-form"
+      onSubmit={(event) => {
+        event.preventDefault();
+        const form = new FormData(event.currentTarget);
+        form.delete("proofCamera");
+        form.delete("proofGallery");
+        if (proof) form.append("proof", proof, proof.name || `dokaz-${task.id}.jpg`);
+        onSubmit(form);
+      }}
+    >
+      <input type="hidden" name="taskId" value={task.id} />
+      <div className="mission-value"><span>ODMENA</span><b>+{task.points} {task.points === 1 ? "BOD" : "BODY"}</b></div>
+      <label>Správa rodičovi<textarea name="note" placeholder="Čo si urobil? Môžeš pridať krátku poznámku." maxLength={500} rows={3} /></label>
+      <div className={`upload-box ${task.proof_required ? "required" : ""}`}>
+        <span>📷</span>
+        <b>{task.proof_required ? "Pridaj povinnú fotografiu" : "Pridaj fotografiu (voliteľné)"}</b>
+        <small>Odfotiť teraz alebo vybrať hotovú fotku z galérie.</small>
+        <div className="upload-actions">
+          <label>Odfotiť<input name="proofCamera" type="file" accept="image/*" capture="environment" onChange={(event) => setSelectedProof(event.currentTarget.files?.[0] ?? null)} /></label>
+          <label>Galéria<input name="proofGallery" type="file" accept="image/*" onChange={(event) => setSelectedProof(event.currentTarget.files?.[0] ?? null)} /></label>
+        </div>
+        {proof && (
+          <div className="proof-preview">
+            {previewUrl && <img src={previewUrl} alt="Vybraný dôkaz" />}
+            <div><b>Fotka pripojená</b><small>{proof.name || "Nová fotografia"} · {Math.max(1, Math.round(proof.size / 1024))} kB</small></div>
+            <button type="button" onClick={() => setSelectedProof(null)}>Odobrať</button>
+          </div>
+        )}
+      </div>
+      {task.reviewer_comment && <div className="review-note">Rodič napísal: {task.reviewer_comment}</div>}
+      <button className="primary-button" disabled={busy}>{busy ? "Odosielam…" : "Poslať na kontrolu →"}</button>
+    </form>
+  );
 }
 
 function ReviewTask({ task, canReview, busy, onAction }: { task: Task; canReview: boolean; busy: boolean; onAction: (action: string, comment: string) => void }) {

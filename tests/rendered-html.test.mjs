@@ -42,5 +42,6 @@ test("keeps the family rules wired into the product", async () => {
   assert.match(taskRoute, /proof_required/);
   assert.deepEqual(JSON.parse(hosting), { d1: "DB", r2: "UPLOADS" });
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
-  assert.match(compose, /3008:3000/);
+  assert.match(compose, /published: "3008"/);
+  assert.match(compose, /target: 3000/);
 });

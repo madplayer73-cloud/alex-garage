@@ -66,6 +66,7 @@ type Screen = "loading" | "setup" | "login" | "app";
 type Tab = "home" | "tasks" | "badges" | "money";
 type ModalState =
   | null
+  | { type: "menu" }
   | { type: "new-task" }
   | { type: "submit-task"; task: Task }
   | { type: "review-task"; task: Task }
@@ -103,6 +104,7 @@ export function FamilyApp() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   const loadStatus = useCallback(async () => {
     const status = await api<{ configured: boolean; users: FamilyMember[] }>("/api/status");
@@ -127,6 +129,9 @@ export function FamilyApp() {
   }, []);
 
   useEffect(() => {
+    const savedTheme = localStorage.getItem("alexGarageTheme") === "dark" ? "dark" : "light";
+    setTheme(savedTheme);
+    document.documentElement.dataset.theme = savedTheme;
     void (async () => {
       try {
         const status = await loadStatus();
@@ -138,6 +143,17 @@ export function FamilyApp() {
       }
     })();
   }, [loadStatus, refresh]);
+
+  function toggleTheme() {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem("alexGarageTheme", next);
+  }
+
+  function downloadBackup() {
+    window.location.href = "/api/backup";
+  }
 
   async function run(action: () => Promise<unknown>, success: string) {
     setBusy(true);
@@ -213,10 +229,14 @@ export function FamilyApp() {
   return (
     <main className="app-shell">
       <header className="topbar">
+        <button className="hamburger-button" onClick={() => setModal({ type: "menu" })} aria-label="Menu">
+          <span /><span /><span />
+        </button>
         <button className="brand" onClick={() => setTab("home")} aria-label="Domov">
           <span className="brand-mark">A</span>
           <span><strong>ALEX GARAGE</strong><small>Rodinné misie</small></span>
         </button>
+        <span className="beta-pill">BETA V0</span>
         <button
           className="profile-chip"
           onClick={async () => {
@@ -290,6 +310,24 @@ export function FamilyApp() {
 
       {message && <div className="toast success">✓ {message}</div>}
       {error && screen === "app" && <div className="toast error">{error}<button onClick={() => setError("")}>×</button></div>}
+
+      {modal?.type === "menu" && (
+        <Modal title="Menu" subtitle="Rýchle nastavenia testovacej verzie" onClose={() => setModal(null)}>
+          <div className="menu-panel">
+            <button className="menu-row" onClick={toggleTheme}>
+              <span>{theme === "dark" ? "☀" : "☾"}</span>
+              <div><b>{theme === "dark" ? "Light režim" : "Dark režim"}</b><small>Prepne vzhľad aplikácie na tomto zariadení.</small></div>
+            </button>
+            {!isAlex && (
+              <button className="menu-row" onClick={downloadBackup}>
+                <span>☁</span>
+                <div><b>Stiahnuť testovaciu zálohu</b><small>JSON export úloh, bodov, odznakov a požiadaviek.</small></div>
+              </button>
+            )}
+            <div className="beta-note"><b>BETA verzia V0</b><small>Testujeme pravidlá, fotky a odmeny. Ostrú cloud zálohu napojíme po výbere služby.</small></div>
+          </div>
+        </Modal>
+      )}
 
       {modal?.type === "new-task" && (
         <Modal title="Nová misia" subtitle="Zadajte Alexovi jasnú úlohu" onClose={() => setModal(null)}>

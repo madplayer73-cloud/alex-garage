@@ -1,81 +1,42 @@
-# Alex Garage
+# Osud rozhodol
 
-Súkromná rodinná aplikácia s úlohami, odznakmi a motiváciou v podobe červeného Yarisu. Je pripravená na beh v domácej sieti na CasaOS.
+Malá aplikácia v slovenčine na každodenné dilemy. Pridaj 2 až 5 možností, roztoč tri valce a nechaj náhodu vybrať. Hra má najviac tri zatočenia. Prvé dva pokusy žrebujú každý nepodržaný valec samostatne a môžu skončiť bez trojice. Podržanie jednej alebo dvoch rovnakých možností ovplyvní ďalšie pokusy. Tretie zatočenie garantuje verdikt: doplní podržanú možnosť do trojice, alebo bez podržania rovnomerne vyberie jednu z možností. Pri prirodzenej trojici sa hra končí aj skôr. Nie je to hazardná hra a nepracuje s peniazmi.
 
-## Čo aplikácia obsahuje
+## Vývoj
 
-- tri účty s vlastným PIN-om: Alex, mama a otec,
-- týždenný cieľ 10 bodov od každého rodiča,
-- bodovú hodnotu úlohy určenú rodičom,
-- voliteľný alebo povinný fotografický dôkaz,
-- schválenie iba rodičom, ktorý úlohu zadal,
-- odomknutie Yarisu na nasledujúci týždeň,
-- Alexove finančné požiadavky a podmienené misie,
-- herné odznaky, bezchybné týždne a trojtýždňové série,
-- históriu úloh, bodov, odmien a vyplatených požiadaviek.
+Node.js >= 22.12.0 a npm.
 
-## Prvé spustenie
-
-Pri prvom otvorení aplikácia vyžiada mená a PIN-y všetkých troch členov rodiny. PIN musí mať 4 až 8 číslic. Ukladá sa iba jeho zabezpečený odtlačok.
-
-## Spustenie na CasaOS
-
-1. Skopírujte celý priečinok projektu na CasaOS server, napríklad do `/DATA/AppData/alex-garage-src`.
-2. Cez SSH otvorte daný priečinok.
-3. Spustite:
-
-   ```bash
-   docker compose up -d --build
-   ```
-
-4. V telefóne alebo počítači otvorte `http://IP_ADRESA_CASAOS:3008`.
-5. Dokončite prvé rodinné nastavenie.
-
-CasaOS používa štandardný Docker Compose formát. Aplikácia publikuje port `3008` a všetky trvalé dáta uchováva v priečinku `alex-garage-data`. Konfigurácia zodpovedá aktuálnemu Compose modelu používanému v CasaOS AppStore.
-
-## Záloha
-
-Zálohujte celý priečinok `alex-garage-data`. Obsahuje databázu aj fotografie. Pred kopírovaním zálohy je najistejšie kontajner na chvíľu zastaviť:
-
-```bash
-docker compose stop
-docker compose start
+```sh
+npm ci
+npm run dev -- --host 0.0.0.0 --port 3000
 ```
 
-## Neskorší prístup cez Tailscale
+## Zostavenie
 
-Po pridaní CasaOS servera a telefónov do rovnakej Tailscale siete zostane aplikácia na porte `3008`. Otvorí sa cez Tailscale IP adresu servera. Port neotvárajte priamo do internetu cez router.
-
-## Lokálny vývoj
-
-Vyžaduje Node.js 22 alebo novší.
-
-```bash
-npm install
-npm run dev
-```
-
-Produkčná kontrola a lokálny server:
-
-```bash
+```sh
 npm run build
-npm start
+npm run preview -- --port 3000
 ```
 
-Predvolená lokálna adresa je `http://localhost:3000` a dáta sa ukladajú do priečinka `data`.
+Aplikácia nepotrebuje backend, účet ani kľúče. Možnosti, aktuálnu hru vrátane pokusov a podržaných valcov, posledných päť výsledkov a nastavenie zvuku ukladá iba do localStorage daného prehliadača. Zvuky generuje Web Audio API až po interakcii používateľa; možno ich vypnúť. Jednotlivé náhodné výbery používajú rovnomerné žrebovanie cez Web Crypto. Podržanie zvýhodňuje zvolenú možnosť; hra nepredstiera rovnaké konečné pravdepodobnosti po zásahu hráča. Animácia rešpektuje systémové nastavenie obmedzeného pohybu.
 
-## Gmail notifikacie
+Historický projekt Alex Garage bol odstránený na žiadosť používateľa; Git história zostala zachovaná.
 
-Aplikacia vie posielat notifikacie cez Google Apps Script Web App. Ked nie je nastavene `NOTIFY_WEBHOOK_URL` alebo `NOTIFY_SECRET`, notifikacie sa potichu preskocia a aplikacia funguje dalej.
+## Automatické ikonky
 
-Premenne v `docker-compose.yml`:
+Text možnosti môže mať najviac 40 znakov; počítadlo je pri každom políčku. Ikonky sa priraďujú priebežne z lokálneho slovníka slovenských/českých jedál, nápojov a aktivít, aj bez diakritiky. Konkrétne jedlá majú prednosť pred všeobecnými ingredienciami. Nerozpoznaný text dostane ✨. Emoji napísané priamo v texte má prednosť. Kliknutím na ikonku možno otvoriť výber, ručne ju zmeniť alebo obnoviť automatický režim. Ručný výber zostáva pri úpravách textu aj obnovení stránky. Žiadny text sa neposiela na server ani do AI služby.
 
-- `ALEX_EMAIL`
-- `MAMA_EMAIL`
-- `OTEC_EMAIL`
-- `PARENT_EMAILS`
-- `ALEX_APP_URL`
-- `NOTIFY_WEBHOOK_URL`
-- `NOTIFY_SECRET`
+Testy slovníka: `npm test`.
 
-Notifikacie sa posielaju pri novej ulohe pre Alexa, pri novej poziadavke na peniaze pre rodicov a pri odoslani splnenej ulohy rodicovi na kontrolu.
+## Hra na najviac tri pokusy
+
+- Podržať možno iba valce s rovnakou možnosťou; porovnáva sa index možnosti, nie samotná ikonka. Dve jedlá s rovnakým emoji teda netvoria dvojicu.
+- Podržanie sa dá medzi pokusmi uvoľniť. Nezlučiteľné podržania sú zakázané, aby tretí pokus mohol zachovať všetky podržané valce a zároveň priniesť trojicu.
+- Možnosti sa po prvom pokuse zamknú. Pokus sa uloží pred animáciou; obnovenie stránky nedá ďalší pokus ani druhý záznam do histórie.
+- Po verdikte sa spin aj páka zamknú. Tlačidlo Nová dilema otvorí tri prázdne možnosti pre ďalšiu otázku.
+- Bežné výherné automaty trojicu negarantujú. Garantovaný tretí pokus je zámerná úprava pre rozhodovaciu hru.
+- `npm test` overuje slovník ikoniek aj logiku pokusov, podržania, obnovy a konečného verdiktu.
+
+## CasaOS / Docker
+
+Postup nasadenia je v [deploy/CASAOS.md](deploy/CASAOS.md). Na CasaOS stačí stiahnuť repozitár z GitHubu a spustiť `docker compose up -d --build`; predvolený port je 8099. Hotová aplikácia je verzovaná v `deploy/site`, takže CasaOS nepotrebuje Node.js ani npm. Pri vývoji spusti `npm test` a `npm run build`; build zároveň obnoví `deploy/site`. Pri odosielaní zdrojových zmien na GitHub vždy odošli aj tieto aktualizované výstupy. Pre pripravený balík bez Node.js spusti `python3 scripts/package-casaos.py` (Python 3 je potrebný iba na zabalenie, nie na beh aplikácie). Voliteľne použi `--output /cesta/osud-casaos.zip`. Skript najprv spustí testy a build a potom zabalí statické súbory, Docker/Compose konfiguráciu, návod a kontrolné súčty.

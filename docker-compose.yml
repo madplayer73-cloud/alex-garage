@@ -1,23 +1,36 @@
+name: osud
 services:
-  alex-garage:
-    build: .
-    container_name: alex-garage
+  osud:
+    image: osud-rozhodol:local
+    build:
+      context: .
     restart: unless-stopped
     ports:
-      - target: 3000
-        published: "3008"
+      - target: 80
+        published: "${OSUD_PORT:-8099}"
         protocol: tcp
-    volumes:
-      - ./alex-garage-data:/data
-    environment:
-      - TZ=Europe/Bratislava
-      - ALEX_AUTO_HOST=0.0.0.0
-      - ALEX_AUTO_PORT=3000
-      - ALEX_AUTO_DATA_DIR=/data
-      - ALEX_APP_URL=http://192.168.31.193:3008
-      - ALEX_EMAIL=alex.csekes@gmail.com
-      - MAMA_EMAIL=karolina.janostiakova@gmail.com
-      - OTEC_EMAIL=attila.csekes@gmail.com
-      - PARENT_EMAILS=karolina.janostiakova@gmail.com,attila.csekes@gmail.com
-      - NOTIFY_WEBHOOK_URL=
-      - NOTIFY_SECRET=
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      retries: 3
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_us: Web interface
+            sk_sk: Webové rozhranie
+
+x-casaos:
+  main: osud
+  category: Utilities
+  port_map: "8099"
+  scheme: http
+  index: /
+  title:
+    en_us: Osud rozhodol
+    sk_sk: Osud rozhodol
+  description:
+    en_us: A playful decision machine. Three spins, one verdict.
+    sk_sk: Automat na každodenné dilemy. Tri pokusy, jeden verdikt.

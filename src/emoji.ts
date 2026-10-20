@@ -1,0 +1,76 @@
+// Specific dishes come before broad ingredients and activities.
+// Normalize accents so Slovak, Czech and unaccented text work alike.
+const rules: ReadonlyArray<readonly [string, RegExp]> = [
+  ['🍝', /\b(spaget\w*|cestovin\w*|pasta|lasagn\w*|lasan\w*|carbonara|bologn\w*|bolons\w*|penne|tagliatelle|makaron\w*)\b/],
+  ['🥞', /\b(palacink\w*|lievanc\w*|pancake\w*|crepe\w*)\b/],
+  ['🧇', /\b(wafl\w*|vafl\w*)\b/],
+  ['🍕', /\b(pizz\w*)\b/],
+  ['🍣', /\b(sushi|susi|maki|nigiri|sashimi)\b/],
+  ['🍔', /\b(burger\w*|hamburger\w*)\b/],
+  ['🌮', /\b(taco\w*|tortill\w*|quesadill\w*)\b/],
+  ['🌯', /\b(burrito\w*|wrap\w*|kebab\w*|gyros)\b/],
+  ['🍛', /\b(kari|curry|rizot\w*|risott\w*)\b/],
+  ['🍜', /\b(ramen|pho|rezanc\w*|nudl\w*)\b/],
+  ['🍲', /\b(gulas\w*|kapustnic\w*|privar\w*|stew)\b/],
+  ['🥣', /\b(poliev\w*|polev\w*|vyvar\w*|soup|kasa|kasu|kase|ovsena|ovsene)\b/],
+  ['🥗', /\b(salat\w*|salad\w*)\b/],
+  ['🥟', /\b(halusk\w*|piro[hg]\w*|knedl\w*|pelmen\w*|dumpling\w*)\b/],
+  ['🥩', /\b(rezen|rezne|reznov\w*|steak\w*|biftek\w*|hovadz\w*|bravcov\w*|maso|masa)\b/],
+  ['🍗', /\b(kurac\w*|kura|kurata|kurca\w*|chicken|morca\w*|kack\w*)\b/],
+  ['🐟', /\b(losos\w*|ryba|rybu|ryby|rybac\w*|tuniak\w*|pstruh\w*|fish)\b/],
+  ['🍤', /\b(krevet\w*|shrimp\w*)\b/],
+  ['🍚', /\b(ryza|ryzu|ryze|ryzou|rice)\b/],
+  ['🥔', /\b(zemiak\w*|brambor\w*|gratin\w*)\b/],
+  ['🍟', /\b(hranol\w*|fries)\b/],
+  ['🍳', /\b(omelet\w*|vajic\w*|vajec\w*|vajce|vajcia|prazen\w*|hemendex|ranajk\w*)\b/],
+  ['🥪', /\b(sendvic\w*|sandwich\w*|toast\w*|toust\w*|chlebic\w*)\b/],
+  ['🧀', /\b(syr|syra|syrom|syrov\w*|cheese)\b/],
+  ['🍞', /\b(chlieb|chleba|chlebu|pecivo|peciva|rozok|rozky|zeml\w*)\b/],
+  ['🍰', /\b(kolac\w*|tort\w*|zakus\w*|dezert\w*|cake|cheesecake)\b/],
+  ['🍪', /\b(susien\w*|cookie\w*|keks\w*)\b/],
+  ['🍦', /\b(zmrzlin\w*|nanuk\w*|ice cream)\b/],
+  ['🍫', /\b(cokolad\w*|chocolate)\b/],
+  ['🍓', /\b(jahod\w*|strawberr\w*)\b/],
+  ['🍎', /\b(jablk\w*|ovoci\w*|ovocn\w*)\b/],
+  ['🍌', /\b(banan\w*)\b/],
+  ['☕', /\b(kava|kavu|kavy|kave|kavou|kavick\w*|coffee|espresso|cappuccino|latte)\b/],
+  ['🍵', /\b(caj|caju|cajom|cajik\w*|tea|matcha)\b/],
+  ['🍷', /\b(vino|vina|vinu|vinom|vin\w*ko|wine|prosecco)\b/],
+  ['🍺', /\b(pivo|piva|pivu|pivom|pivk\w*|beer)\b/],
+  ['🍹', /\b(kokta[iy]l\w*|cocktail\w*|mojito|drink\w*)\b/],
+  ['🥤', /\b(smoothie|dzus\w*|limonad\w*|cola|kofol\w*)\b/],
+  ['🏋️', /\b(cvic\w*|zacvic\w*|posil\w*|fitko|fitness|gym|trening\w*|trenovat|workout)\b/],
+  ['🏃', /\b(beh|behat|behan\w*|zabehat|pobehat|running|run)\b/],
+  ['🚲', /\b(bicy\w*|cykl\w*|bike|biking)\b/],
+  ['🧘', /\b(joga|jogu|jogy|yoga|medit\w*|pilates|stretching)\b/],
+  ['🏊', /\b(plav\w*|zaplavat|bazen\w*|swim\w*)\b/],
+  ['⚽', /\b(futbal\w*|fotbal\w*|football|soccer)\b/],
+  ['🎾', /\b(tenis\w*|tennis|squash|padel)\b/],
+  ['🥾', /\b(tura|turu|tury|turistik\w*|hiking|hike)\b/],
+  ['🚶', /\b(prechadz\w*|prejst|prejst sa|walk\w*)\b/],
+  ['🌲', /\b(prirod\w*|les|lesa|lese|vylet\w*|kemp\w*|camp\w*)\b/],
+  ['🍿', /\b(film\w*|kino|kina|netflix|serial\w*|movie\w*)\b/],
+  ['🎮', /\b(hrat|zahrat|hry|hru|hra|gaming|playstation|xbox|videoh\w*)\b/],
+  ['📚', /\b(knih\w*|citat|citan\w*|precitat|read\w*|book\w*)\b/],
+  ['🎵', /\b(hudb\w*|music|pocuvat|koncert\w*|spiev\w*)\b/],
+  ['💃', /\b(tanc\w*|tanec|dance|diskotek\w*)\b/],
+  ['🎨', /\b(malovat|malovan\w*|kresl\w*|tvorit|paint\w*|art)\b/],
+  ['📷', /\b(fotit|foten\w*|fotograf\w*|photo\w*)\b/],
+  ['🛍️', /\b(nakup\w*|shop\w*|obchod\w*)\b/],
+  ['🧹', /\b(uprat\w*|cistit|poriadok|clean\w*)\b/],
+  ['💻', /\b(prac\w*|robot\w*|kod\w*|programov\w*|work|coding)\b/],
+  ['📖', /\b(ucit|ucen\w*|stud\w*|kurz\w*|learn\w*)\b/],
+  ['🛌', /\b(spat|span\w*|zdriem\w*|vyspat|sleep|postel\w*)\b/],
+  ['🍳', /\b(varit|varen\w*|uvar\w*|upiect|pecenie|piect|cooking|obed\w*|vecera|veceru|vecere|vecerou|jedlo|jedla)\b/],
+  ['🛋️', /\b(oddych\w*|relax\w*|doma|domov|nicnerob\w*|gauc\w*)\b/],
+];
+
+export const emojiOptions = [...new Set(['✨', ...rules.map(([emoji]) => emoji), '🎯'])];
+
+export function suggestEmoji(label: string): string {
+  // An explicitly typed emoji takes priority over the dictionary.
+  const typed = label.match(/\p{Extended_Pictographic}(?:\uFE0F|[\u{1F3FB}-\u{1F3FF}])*(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|[\u{1F3FB}-\u{1F3FF}])*)*/u);
+  if (typed) return typed[0];
+  const normalized = label.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
+  return rules.find(([, pattern]) => pattern.test(normalized))?.[0] ?? '✨';
+}

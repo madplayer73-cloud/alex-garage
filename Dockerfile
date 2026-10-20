@@ -1,20 +1,7 @@
-FROM node:22-bookworm-slim AS build
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci --ignore-scripts --no-audit --no-fund
-COPY . .
-RUN npm run build
-
-FROM node:22-bookworm-slim AS runtime
-WORKDIR /app
-ENV NODE_ENV=production
-ENV ALEX_AUTO_HOST=0.0.0.0
-ENV ALEX_AUTO_PORT=3000
-ENV ALEX_AUTO_DATA_DIR=/data
-COPY package.json package-lock.json ./
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/scripts ./scripts
-EXPOSE 3000
-VOLUME ["/data"]
-CMD ["npm", "start"]
+FROM nginx:stable-alpine
+COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
+COPY deploy/site /usr/share/nginx/html
+RUN chmod 644 /etc/nginx/conf.d/default.conf && chmod -R a+rX /usr/share/nginx/html
+EXPOSE 80
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD wget -q --spider http://127.0.0.1/ || exit 1

@@ -32,11 +32,15 @@ Testy slovníka: `npm test`.
 
 - Podržať možno iba valce s rovnakou možnosťou; porovnáva sa index možnosti, nie samotná ikonka. Dve jedlá s rovnakým emoji teda netvoria dvojicu.
 - Podržanie sa dá medzi pokusmi uvoľniť. Nezlučiteľné podržania sú zakázané, aby tretí pokus mohol zachovať všetky podržané valce a zároveň priniesť trojicu.
-- Možnosti sa po prvom pokuse zamknú. Pokus sa uloží pred animáciou; obnovenie stránky nedá ďalší pokus ani druhý záznam do histórie.
-- Po verdikte sa spin aj páka zamknú. Tlačidlo Nová dilema otvorí tri prázdne možnosti pre ďalšiu otázku.
+- Vlastné možnosti sa počas roztočenej hry zamknú; tlačidlo Upraviť možnosti alebo výber inej predvoľby začnú novú dilemu. Po verdikte sa možnosti dajú opäť upravovať. Pokus sa uloží pred animáciou; obnovenie stránky nedá ďalší pokus ani druhý záznam do histórie.
+- Po verdikte sa páka zamkne a hlavné zelené tlačidlo sa zmení na Nová dilema. Otvorí tri prázdne možnosti pre ďalšiu otázku a presunie na ne zobrazenie aj fokus. Predvoľby zostávajú použiteľné; výber inej témy, úprava názvu či pridanie/odstránenie možnosti začnú novú dilemu. Zmena samotnej ikonky neobnoví pokusy.
 - Bežné výherné automaty trojicu negarantujú. Garantovaný tretí pokus je zámerná úprava pre rozhodovaciu hru.
 - `npm test` overuje slovník ikoniek aj logiku pokusov, podržania, obnovy a konečného verdiktu.
 
 ## CasaOS / Docker
 
 Postup nasadenia je v [deploy/CASAOS.md](deploy/CASAOS.md). Na CasaOS stačí stiahnuť repozitár z GitHubu a spustiť `docker compose up -d --build`; predvolený port je 8099. Hotová aplikácia je verzovaná v `deploy/site`, takže CasaOS nepotrebuje Node.js ani npm. Pri vývoji spusti `npm test` a `npm run build`; build zároveň obnoví `deploy/site`. Pri odosielaní zdrojových zmien na GitHub vždy odošli aj tieto aktualizované výstupy. Pre pripravený balík bez Node.js spusti `python3 scripts/package-casaos.py` (Python 3 je potrebný iba na zabalenie, nie na beh aplikácie). Voliteľne použi `--output /cesta/osud-casaos.zip`. Skript najprv spustí testy a build a potom zabalí statické súbory, Docker/Compose konfiguráciu, návod a kontrolné súčty.
+
+## Kontrola pokračovania po verdikte
+
+Voliteľné prehliadačové regresné testy: pri spustenej aplikácii a dostupnom Python Playwright/Chromium spusti `python3 tests/browser_navigation.py`. Adresu možno zmeniť cez `OSUD_TEST_URL`, cestu k prehliadaču cez `CHROMIUM_PATH`. Testy pokrývajú obnovený výsledok vína, veľké tlačidlo Nová dilema, všetky predvoľby, úpravu/pridanie/odstránenie možností, zmenu ikonky bez nového pokusu, podržanie a mobilný prechod na nové vstupy.

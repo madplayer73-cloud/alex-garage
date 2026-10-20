@@ -23,6 +23,23 @@ git pull --ff-only origin main
 docker compose up -d --build
 ```
 
+Ak na CasaOS nie je nainštalovaný Git, namiesto jeho inštalácie môžeš použiť jednorazový kontajner. Prvé stiahnutie:
+
+```sh
+sudo mkdir -p /DATA/AppData/osud &&
+sudo docker run --rm --user 0:0 -v /DATA/AppData/osud:/git -w /git alpine/git clone --depth 1 --branch main https://github.com/madplayer73-cloud/alex-garage.git . &&
+cd /DATA/AppData/osud &&
+sudo docker compose up -d --build
+```
+
+Ďalšie aktualizácie bez Gitu na serveri:
+
+```sh
+sudo docker run --rm --user 0:0 -v /DATA/AppData/osud:/git -w /git alpine/git pull --ff-only origin main &&
+cd /DATA/AppData/osud &&
+sudo docker compose up -d --build
+```
+
 Otvor `http://IP_ADRESA_SERVERA:8099`.
 
 Ide o ručnú aktualizáciu z GitHubu: aplikácia si sama nové verzie nesťahuje. Po reštarte servera sa kontajner spustí automaticky.

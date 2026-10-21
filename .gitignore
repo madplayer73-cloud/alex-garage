@@ -5,3 +5,6 @@ dist/
 .wrangler/
 playwright-report/
 /release/
+
+__pycache__/
+*.py[cod]

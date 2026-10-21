@@ -1,4 +1,5 @@
 import './style.css';
+import { setupAppearance } from './appearance';
 import { emojiOptions, suggestEmoji } from './emoji';
 import { newRound, restoreRound, spinRound, toggleHold, canHold, winningChoice } from './round';
 
@@ -29,7 +30,7 @@ let audio: AudioContext | undefined;
 function persist() { try { localStorage.setItem('osud-v1',JSON.stringify({choices,history,sound,round,roundChoices:choiceSignature()})); } catch { /* Private browsing may disable storage. */ } }
 const app = document.querySelector<HTMLDivElement>('#app')!;
 app.innerHTML = `
-  <header class="header"><a class="brand" href="./" aria-label="Osud — úvod"><span class="brand-symbol">✳</span> osud<span class="brand-dot">.</span></a><span class="header-note">PRE VŠETKY TVOJE „ALEBO“.</span><div class="header-actions"><button id="help" class="text-button">Ako to funguje <span class="diagonal-arrow" aria-hidden="true"></span></button><span class="header-divider"></span><button id="sound" class="sound-button" aria-label="Vypnúť zvuk"></button></div></header>
+  <header class="header"><a class="brand" href="./" aria-label="Osud — úvod"><span class="brand-symbol">✳</span> osud<span class="brand-dot">.</span></a><span class="header-note">PRE VŠETKY TVOJE „ALEBO“.</span><div class="header-actions"><button id="help" class="text-button">Ako to funguje <span class="diagonal-arrow" aria-hidden="true"></span></button><span class="header-divider"></span><button id="sound" class="sound-button" aria-label="Vypnúť zvuk"></button><div class="appearance-control"><button id="appearance-toggle" class="menu-toggle" aria-label="Otvoriť menu" aria-expanded="false" aria-controls="appearance-menu" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h14"/></svg></button><section id="appearance-menu" class="appearance-menu" role="dialog" aria-label="Nastavenia vzhľadu" hidden><div class="appearance-heading"><span>PO TVOJOM</span><h2>Vzhľad aplikácie</h2></div><fieldset class="theme-picker"><legend>Farebný režim</legend><label class="theme-option"><input type="radio" name="theme" value="dark"><span class="theme-preview preview-dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 14a8 8 0 0 1-10-10 8.5 8.5 0 1 0 10 10Z"/></svg><span></span></span><span class="theme-name">Dark <small>Tmavý</small></span><span class="theme-check" aria-hidden="true">✓</span></label><label class="theme-option"><input type="radio" name="theme" value="light"><span class="theme-preview preview-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><span></span></span><span class="theme-name">Light <small>Svetlý</small></span><span class="theme-check" aria-hidden="true">✓</span></label></fieldset><p class="appearance-note">Tvoja voľba zostane uložená.</p><button id="appearance-help" class="appearance-help">Ako funguje osud <span class="diagonal-arrow" aria-hidden="true"></span></button></section></div></div></header>
   <main>
     <section class="intro"><div class="eyebrow"><span class="live-dot"></span> MENEJ PREMÝŠĽANIA. VIAC ŽIVOTA.</div><h1>Ťažké rozhodnutie?<br>Nechaj to na <em>osud.</em><span class="title-spark">✳</span></h1><p>Víno alebo fitko? Pizza alebo sushi? Pridaj svoje možnosti.<br class="desktop-break"> Tri pokusy. Podrž symboly. Nechaj prehovoriť osud.</p></section>
     <section class="playground" aria-label="Automat na rozhodovanie">
@@ -248,3 +249,5 @@ lever.addEventListener('pointerup', event=>{
 lever.addEventListener('pointercancel',()=>{leverStart=null;lever.style.transform='';});
 renderChoices(); idleReels(); renderHistory(); renderSound(); renderRoundControls(); renderRoundResult();
 syncPresets();
+
+setupAppearance();

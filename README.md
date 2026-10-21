@@ -44,3 +44,11 @@ Postup nasadenia je v [deploy/CASAOS.md](deploy/CASAOS.md). Na CasaOS stačí st
 ## Kontrola pokračovania po verdikte
 
 Voliteľné prehliadačové regresné testy: pri spustenej aplikácii a dostupnom Python Playwright/Chromium spusti `python3 tests/browser_navigation.py`. Adresu možno zmeniť cez `OSUD_TEST_URL`, cestu k prehliadaču cez `CHROMIUM_PATH`. Testy pokrývajú obnovený výsledok vína, veľké tlačidlo Nová dilema, všetky predvoľby, úpravu/pridanie/odstránenie možností, zmenu ikonky bez nového pokusu, podržanie a mobilný prechod na nové vstupy.
+
+## Vzhľad aplikácie
+
+Hamburger menu vpravo hore ponúka Dark a Light. Voľba sa ukladá samostatne od hry, počtu pokusov a histórie a použije sa aj po obnovení stránky. Menu funguje klávesnicou, zavrie sa cez Escape alebo kliknutím mimo a na malých obrazovkách obsahuje aj pomoc. Celé svetlé rozhranie zahŕňa mašinu, výsledok, podržanie, históriu aj dialógy.
+
+Návrhy ďalšieho grafického smeru, realistických ikoniek a rešerš podobných projektov sú v [docs/design-v2.md](docs/design-v2.md). Sú to návrhy na spoločný výber, nie implementovaná druhá verzia. Súčasné ikonky zostávajú zachované.
+
+Všetky prehliadačové kontroly: `python3 -m unittest discover -s tests -p 'browser_*.py' -v` (vyžaduje bežiacu aplikáciu a Python Playwright/Chromium).

@@ -10,7 +10,7 @@ services:
         published: "${OSUD_PORT:-8099}"
         protocol: tcp
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      test: ["CMD", "wget", "-Y", "off", "-q", "--spider", "http://127.0.0.1/"]
       interval: 30s
       timeout: 5s
       start_period: 5s

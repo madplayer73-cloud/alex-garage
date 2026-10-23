@@ -94,3 +94,13 @@ h1 { font-size:clamp(30px,4vw,48px); }
 @media(max-width:380px) { :root { --reel-height:120px;--reel-peek:30px; }.reel-label { font-size:9px; }.reel-item { padding:4px; }.reel-emoji { width:min(100%,66px); }.game-mode { letter-spacing:.5px; }.machine-title { letter-spacing:1px; } }
 :root:not([data-skin=playful]) .preset.active,:root:not([data-skin=playful]) .hold-button.held { background:var(--green);color:var(--accent-ink);border-color:var(--green); }
 :root:not([data-skin=playful]) .panel-description { color:var(--subtle); }
+.apply-game-mode{width:100%;border:1px solid var(--green);border-radius:7px;padding:12px;background:var(--green);color:#201c17;font-size:11px;line-height:1.5;margin-top:8px}
+:root[data-theme=light] .apply-game-mode{color:#fff}
+.auto-icon-toggle{border:0;border-radius:4px;padding:4px 2px;background:transparent;color:var(--muted);font-size:8px;min-width:27px;min-height:30px}
+.auto-icon-toggle[aria-pressed=false]{color:var(--green);text-decoration:underline}
+.choice-row{gap:6px}.choice-row input{min-width:0}.choice-row .char-count{min-width:25px}
+.emoji-option .symbol-object{width:100%;height:100%}.emoji-option:has(.symbol-object){aspect-ratio:1}
+@media(max-width:400px){.choice-row{padding-left:6px;padding-right:6px;gap:3px}.choice-row input{font-size:11px}.auto-icon-toggle{font-size:7px;min-width:24px}}
+.symbol-object.sheet-1{background-image:url('./assets/food-a.png')}
+.symbol-object.sheet-2{background-image:url('./assets/food-b.png')}
+.symbol-object.sheet-3{background-image:url('./assets/activities.png')}

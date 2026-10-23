@@ -3,7 +3,7 @@ import os
 import unittest
 from playwright.sync_api import sync_playwright, expect
 
-class MachineTests(unittest.TestCase):
+class MachineBrowserCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.p=sync_playwright().start()
@@ -26,11 +26,13 @@ class MachineTests(unittest.TestCase):
     def spin(self,values):
         self.page.evaluate('v=>window.draws=v',values);self.page.locator('#spin').click()
         expect(self.page.locator('#spin')).to_be_enabled(timeout=6000)
+
+class MachineTests(MachineBrowserCase):
     def test_pure_chance_three_spins_restored_and_mode_lock(self):
         expect(self.page.locator('#mode-label')).to_have_text('ČISTÁ NÁHODA')
         expect(self.page.locator('#hold-controls')).to_be_hidden()
         self.spin([0,1,2]);self.page.reload(wait_until='networkidle')
-        self.menu();expect(self.page.locator('[name="game-mode"][value="hold"]')).to_be_disabled()
+        self.menu();expect(self.page.locator('[name="game-mode"][value="hold"]')).to_be_enabled()
         self.page.keyboard.press('Escape');self.spin([2,1,0])
         expect(self.page.locator('#spin-label')).to_have_text('Finálové žrebovanie')
         self.spin([1]);expect(self.page.locator('#result strong')).to_have_text('Ísť si zacvičiť')

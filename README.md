@@ -47,9 +47,9 @@ Voliteľné prehliadačové regresné testy: pri spustenej aplikácii a dostupno
 
 ## Vzhľad aplikácie
 
-Hamburger menu ponúka štyri vzhľady: **Studio** (predvolený grafit/meď), **Retro** (chróm/smalt), **Minimal** a **Hravý** (pôvodné emoji). Nezávisle sa prepína Dark/Light. Prvé tri vzhľady zdieľajú lokálnu sadu 16 realistických predmetov v `src/assets/objects.png`, vygenerovanú pre tento projekt. Slovník vyberá význam a `src/symbols.ts` mapuje podporované ikonky na obrázky; ostatné dostanú neutrálnu kocku. Celá sada sa načíta ako jeden lokálny súbor bez externých služieb.
+Hamburger menu ponúka štyri vzhľady: **Studio** (predvolený grafit/meď), **Retro** (chróm/smalt), **Minimal** a **Hravý** (pôvodné emoji). Nezávisle sa prepína Dark/Light. Prvé tri vzhľady zdieľajú lokálne sady realistických predmetov v `src/assets/*.png`, ktoré pokrývajú všetkých 63 ikoniek slovníka, vygenerovanú pre tento projekt. Slovník vyberá význam a `src/symbols.ts` mapuje podporované ikonky na obrázky; nerozpoznané výrazy dostanú neutrálnu kocku. Obrázky sa načítajú z lokálnych atlasov bez externých služieb.
 
-Menu obsahuje tiež zvuk, pravidlá a výber herného režimu. Pravidlá možno meniť iba pred prvým pokusom novej dilemy. Zmena grafiky ani Dark/Light nemení žrebovanie, podržanie, počet pokusov alebo históriu. Staršie uložené hry bez označenia režimu sa obnovia ako Hra s podržaním, aby sa nestratili ich pravidlá; nové inštalácie začínajú Čistou náhodou. Po otvorení Novej dilemy možno prepnúť režim.
+Menu obsahuje tiež zvuk, pravidlá a výber herného režimu. Režim možno vybrať kedykoľvek mimo animácie. Pri rozbehnutej alebo hotovej dileme sa uloží výber pre ďalšiu hru a menu ponúkne výslovné tlačidlo na novú dilemu so zachovanými možnosťami; samotný výber neobnovuje pokusy ani nemení výsledok. Zmena grafiky ani Dark/Light nemení žrebovanie, podržanie, počet pokusov alebo históriu. Staršie uložené hry bez označenia režimu sa obnovia ako Hra s podržaním, aby sa nestratili ich pravidlá; nové inštalácie začínajú Čistou náhodou. Po otvorení Novej dilemy možno prepnúť režim.
 
 Valce majú viditeľné susedné položky, postupné zastavenie, zvuk dosadnutia a pákové ovládanie. Enter presúva medzi možnosťami a na konci pridá ďalšiu (do limitu päť). Na mobile je mašina nad editorom možností. Zvuk a obmedzený pohyb sú rešpektované. Vzhľad a hra sa ukladajú lokálne; rozdielne adresy LAN/Tailscale a rôzne prehliadače nemajú spoločné úložisko.
 
@@ -58,3 +58,7 @@ Podkladová štúdia a matematika šancí sú v [docs/machine-study.md](docs/mac
 `npm test` zahŕňa úplný výpočet symetrie výsledkov pre 2–5 možností, migráciu starých hier, odmietnutie skresľujúceho zvyšku generátora a oba režimy. Prehliadačové testy overujú všetky štyri vzhľady × oba farebné režimy × štyri šírky, zamknutie pravidiel, tretí pokus, držanie, uloženie počas animácie, klávesnicu, zvuk a pokračovanie po výsledku.
 
 Všetky prehliadačové kontroly: `python3 -m unittest discover -s tests -p 'browser_*.py' -v` (vyžaduje bežiacu aplikáciu a Python Playwright/Chromium).
+
+## Vlastné možnosti a predvoľby
+
+Doplnené rozpoznávanie PS5/PS4/PS3, Nintendo, Steam a výrazu codovať. Pracovať aj kódovať používajú obrázok notebooku, PS5 obrázok ovládača. Každá ponúkaná ikonka má realistický obrázok aj v ručnom výbere. Pri možnosti je viditeľné Auto alebo Ručná; kliknutím na Ručná sa obnoví automatický výber podľa textu. Ponuka obsahuje 12 hotových dilem vrátane hier, práce, pohybu, nápojov, raňajok, oddychu, sladkostí a domácnosti.

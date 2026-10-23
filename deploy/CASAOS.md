@@ -98,3 +98,9 @@ Pri práci na zdrojovom kóde na vývojovom počítači spusti `npm ci`, `npm te
 V aplikácii otvor ☰ → Pridať na plochu. Na iPhone použi Safari → Zdieľať → Pridať na plochu; na Androide menu prehliadača → Pridať na plochu. Na dnešnej HTTP adrese môže ísť iba o odkaz a na otvorenie potrebuješ dostupný server. Pre plnú inštaláciu a offline režim treba aplikáciu sprístupniť cez HTTPS; samotná aktualizácia Docker obrazu HTTPS nezapína. Mimo domova používaj odkaz s Tailscale adresou a zapnutý Tailscale.
 
 Moje dilemy a aktuálna hra sa ukladajú v prehliadači, nie na CasaOS. Rôzne adresy a prehliadače majú oddelené úložisko.
+
+## Import vlastných obrázkov
+
+V menu otvor **Import vlastných obrázkov**. Aplikácia pripraví prompt pre chýbajúce výrazy. Vlož ho do AI, ktorú používaš, stiahni každý obrázok zvlášť a v importe ho priraď k príslušnému výrazu. Podporované sú aj orezané snímky obrazovky (PNG/JPEG/WebP, max. 6 MB). Aplikácia sama AI nevolá a nevyžaduje platené API.
+
+Aktualizácia cez rovnaký `docker compose up -d --build` vytvorí aj kontajner `photos`. Na CasaOS netreba inštalovať Node.js. Obrázky a databáza sa ukladajú do `/DATA/AppData/osud-photos`; pri aktualizáciách tento priečinok zostáva zachovaný. Zálohuj ho celý. Obrázky sú spoločné pre všetky zariadenia používajúce tento server. Rovnaký výraz sa automaticky priradí aj bez diakritiky a s inými veľkými písmenami; novú formuláciu pridaj ako ďalší výraz.

@@ -23,6 +23,7 @@ def main():
         bundle = Path(temporary) / 'osud'
         bundle.mkdir()
         shutil.copytree(root / 'dist', bundle / 'dist')
+        shutil.copytree(root / 'server', bundle / 'server')
         for source, name in [
             ('deploy/Dockerfile.prebuilt', 'Dockerfile'),
             ('deploy/nginx.conf', 'nginx.conf'),

@@ -5,6 +5,9 @@ services:
     build:
       context: .
     restart: unless-stopped
+    depends_on:
+      photos:
+        condition: service_healthy
     ports:
       - target: 80
         published: "${OSUD_PORT:-8099}"
@@ -21,6 +24,15 @@ services:
           description:
             en_us: Web interface
             sk_sk: Webové rozhranie
+
+  photos:
+    image: osud-photos:local
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    restart: unless-stopped
+    volumes:
+      - "${OSUD_PHOTO_DIR:-/DATA/AppData/osud-photos}:/data"
 
 x-casaos:
   main: osud

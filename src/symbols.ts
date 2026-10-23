@@ -1,3 +1,4 @@
+import { findPhoto } from './photo-catalog.ts';
 // Local atlases cover every icon in the suggestion dictionary.
 const sheets: ReadonlyArray<readonly string[]> = [
   ['🍷','🏋️','🍿','🍝','🍛','🥞','🍕','🍣','🍳','🌲','☕','🛋️','📚','🚲','🥗','✨'],
@@ -14,7 +15,9 @@ export function symbolLocation(emoji: string): {sheet: number; index: number; kn
   }
   return {sheet:0,index:15,known:false};
 }
-export function symbol(emoji: string): string {
+export function symbol(emoji: string, label?:string): string {
+  const photo=label?findPhoto(label):undefined;
+  if(photo) return `<img class="custom-photo" src="${photo.url}" alt="" loading="eager">`;
   const {sheet,index}=symbolLocation(emoji);
   const safe=emoji.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
   return `<span class="symbol-emoji">${safe}</span><span class="symbol-object sheet-${sheet}" aria-hidden="true" style="background-position:${(index%4)*100/3}% ${Math.floor(index/4)*100/3}%"></span>`;

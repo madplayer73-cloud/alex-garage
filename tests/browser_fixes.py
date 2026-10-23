@@ -34,7 +34,7 @@ class ReportedBugsTests(MachineBrowserCase):
         self.page.locator('[data-emoji="0"]').click()
         self.page.get_by_role('button',name='Vybrať 🍷',exact=True).click()
         self.page.locator('[data-choice="0"]').fill('Codovat')
-        expect(self.page.locator('[data-auto="0"]')).to_have_text('Ručná')
+        expect(self.page.locator('[data-auto="0"]')).to_have_text('Auto')
         self.page.locator('[data-auto="0"]').click()
         self.assertEqual(self.state()['choices'][0]['emoji'],'💻')
         expect(self.page.locator('[data-auto="0"]')).to_have_text('Auto')

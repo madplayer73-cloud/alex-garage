@@ -7,6 +7,8 @@
     <script>
       try { document.documentElement.dataset.theme = localStorage.getItem('osud-theme') === 'light' ? 'light' : 'dark'; }
       catch { document.documentElement.dataset.theme = 'dark'; }
+      try { const skin=localStorage.getItem('osud-skin'); document.documentElement.dataset.skin=['studio','retro','minimal','playful'].includes(skin) ? skin : 'studio'; }
+      catch { document.documentElement.dataset.skin='studio'; }
     </script>
     <meta name="description" content="Nevieš sa rozhodnúť? Pridaj možnosti, roztoč valce a nechaj osud vybrať." />
     <title>Osud rozhodol — tvoj automat na dilemy</title>

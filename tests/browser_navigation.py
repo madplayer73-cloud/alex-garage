@@ -108,6 +108,9 @@ class NavigationTests(unittest.TestCase):
         self.assertEqual(self.state()['round']['attempts'], 0)
 
     def test_active_holds_and_changing_to_another_question(self):
+        self.page.locator('#appearance-toggle').click()
+        self.page.locator('[name="game-mode"][value="hold"]').check()
+        self.page.keyboard.press('Escape')
         self.spin([0, 1, 0])
         expect(self.page.get_by_role('textbox', name='Možnosť 1')).to_be_disabled()
         self.page.locator('[data-hold="0"]').click()

@@ -1,6 +1,8 @@
 # Osud — návrh druhej fázy
 
-Stav: návrhy na spoločný výber, nie schválený nový vzhľad. Implementované v tejto fáze je iba hamburger menu a režimy Dark/Light. Hravé emoji zostávajú zachované. Grafické koncepty sú ilustrácie, nie snímky fungujúcej druhej verzie.
+Historický návrh. Aktualizácia 23. 10. 2026: Studio, Retro, Minimal a Hravý sú implementované; aktuálne pravidlá a vzhľady opisuje README. Nasledujúci text zachováva pôvodné návrhy.
+
+Pôvodný stav: návrhy na spoločný výber, nie schválený nový vzhľad. Implementované v tejto fáze je iba hamburger menu a režimy Dark/Light. Hravé emoji zostávajú zachované. Grafické koncepty sú ilustrácie, nie snímky fungujúcej druhej verzie.
 
 ## Čo som skutočne prezrel
 

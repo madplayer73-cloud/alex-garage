@@ -1,14 +1,17 @@
 export const MAX_SPINS = 3;
 
+export type GameMode = 'chance' | 'hold';
+
 export type RoundState = {
+  mode: GameMode;
   attempts: number;
   reels: number[];
   held: boolean[];
   done: boolean;
 };
 
-export function newRound(): RoundState {
-  return { attempts: 0, reels: [-1, -1, -1], held: [false, false, false], done: false };
+export function newRound(mode: GameMode = 'chance'): RoundState {
+  return { mode, attempts: 0, reels: [-1, -1, -1], held: [false, false, false], done: false };
 }
 
 function uniformIndex(length: number): number {
@@ -23,7 +26,7 @@ export function winningChoice(round: RoundState): number | null {
 }
 
 export function canHold(round: RoundState, reel: number): boolean {
-  if (!Number.isInteger(reel) || reel < 0 || reel > 2 || round.attempts === 0 || round.done) return false;
+  if (round.mode !== 'hold' || !Number.isInteger(reel) || reel < 0 || reel > 2 || round.attempts === 0 || round.done) return false;
   const existing = round.held.findIndex(Boolean);
   return existing === -1 || round.held[reel] || round.reels[existing] === round.reels[reel];
 }
@@ -42,11 +45,12 @@ export function spinRound(round: RoundState, choiceCount: number, pick = uniform
     return index;
   };
   const attempts = round.attempts + 1;
-  const heldReel = round.held.findIndex(Boolean);
+  const held = round.mode === 'hold' ? round.held : [false, false, false];
+  const heldReel = held.findIndex(Boolean);
   // A decision helper must finish. Real slot machines do not guarantee this.
   const finalChoice = attempts === MAX_SPINS ? (heldReel === -1 ? draw() : round.reels[heldReel]) : null;
-  const reels = round.reels.map((index, reel) => round.held[reel] ? index : (finalChoice ?? draw()));
-  const next = { attempts, reels, held: [...round.held], done: false };
+  const reels = round.reels.map((index, reel) => held[reel] ? index : (finalChoice ?? draw()));
+  const next = { mode: round.mode, attempts, reels, held: [...held], done: false };
   next.done = winningChoice(next) !== null;
   return next;
 }
@@ -54,14 +58,17 @@ export function spinRound(round: RoundState, choiceCount: number, pick = uniform
 export function restoreRound(value: unknown, choiceCount: number): RoundState {
   if (!value || typeof value !== 'object') return newRound();
   const round = value as RoundState;
+  // Preserve older in-progress games, whose rules always allowed holds.
+  const mode = round.mode === undefined ? 'hold' : round.mode;
+  if (mode !== 'chance' && mode !== 'hold') return newRound();
   if (!Number.isInteger(round.attempts) || round.attempts < 0 || round.attempts > MAX_SPINS ||
       !Array.isArray(round.reels) || round.reels.length !== 3 ||
       !Array.isArray(round.held) || round.held.length !== 3 ||
       !round.held.every(held => typeof held === 'boolean') || typeof round.done !== 'boolean') return newRound();
-  if (round.attempts === 0) return newRound();
+  if (round.attempts === 0) return newRound(mode);
   if (!round.reels.every(index => Number.isInteger(index) && index >= 0 && index < choiceCount)) return newRound();
   const heldChoices = round.reels.filter((_, index) => round.held[index]);
-  if (new Set(heldChoices).size > 1 || round.done !== (winningChoice(round) !== null) ||
+  if ((mode === 'chance' && heldChoices.length > 0) || new Set(heldChoices).size > 1 || round.done !== (winningChoice(round) !== null) ||
       (round.attempts === MAX_SPINS && !round.done)) return newRound();
-  return { attempts: round.attempts, reels: [...round.reels], held: [...round.held], done: round.done };
+  return { mode, attempts: round.attempts, reels: [...round.reels], held: [...round.held], done: round.done };
 }

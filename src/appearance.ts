@@ -20,6 +20,15 @@ export function setupAppearance() {
     try { localStorage.setItem('osud-theme', selected); } catch { /* Theme still works when storage is unavailable. */ }
   }
 
+  const skins = [...panel.querySelectorAll<HTMLInputElement>('input[name="skin"]')];
+  function applySkin(value: string) {
+    const skin = ['studio','retro','minimal','playful'].includes(value) ? value : 'studio';
+    document.documentElement.dataset.skin=skin;
+    skins.forEach(input=>input.checked=input.value===skin);
+    try { localStorage.setItem('osud-skin',skin); } catch { /* Keep session choice. */ }
+  }
+  applySkin(document.documentElement.dataset.skin || 'studio');
+  skins.forEach(input=>input.addEventListener('change',()=>{if(input.checked) applySkin(input.value);}));
   apply(document.documentElement.dataset.theme || 'dark');
   toggle.addEventListener('click', () => {
     if (!panel.hidden) { close(); return; }

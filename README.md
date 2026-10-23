@@ -1,6 +1,6 @@
 # Osud rozhodol
 
-Malá aplikácia v slovenčine na každodenné dilemy. Pridaj 2 až 5 možností, roztoč tri valce a nechaj náhodu vybrať. Hra má najviac tri zatočenia. Prvé dva pokusy žrebujú každý nepodržaný valec samostatne a môžu skončiť bez trojice. Podržanie jednej alebo dvoch rovnakých možností ovplyvní ďalšie pokusy. Tretie zatočenie garantuje verdikt: doplní podržanú možnosť do trojice, alebo bez podržania rovnomerne vyberie jednu z možností. Pri prirodzenej trojici sa hra končí aj skôr. Nie je to hazardná hra a nepracuje s peniazmi.
+Malá aplikácia v slovenčine na každodenné dilemy. Pridaj 2 až 5 možností a roztoč tri valce. Predvolená **Čistá náhoda** dáva každej možnosti rovnakú výslednú šancu: prvé dva pokusy žrebujú každý valec nezávisle, prirodzená trojica ukončí hru skôr. Tretí pokus rovnomerne vyžrebuje jednu možnosť a zobrazí ju trikrát. Voliteľná **Hra s podržaním** umožňuje podržať rovnaké možnosti a tretí pokus ich dokončí; podržanie teda ovplyvňuje šance. Najviac tri pokusy na dilemu, bez peňazí a stávok.
 
 ## Vývoj
 
@@ -24,16 +24,16 @@ Historický projekt Alex Garage bol odstránený na žiadosť používateľa; Gi
 
 ## Automatické ikonky
 
-Text možnosti môže mať najviac 40 znakov; počítadlo je pri každom políčku. Ikonky sa priraďujú priebežne z lokálneho slovníka slovenských/českých jedál, nápojov a aktivít, aj bez diakritiky. Konkrétne jedlá majú prednosť pred všeobecnými ingredienciami. Nerozpoznaný text dostane ✨. Emoji napísané priamo v texte má prednosť. Kliknutím na ikonku možno otvoriť výber, ručne ju zmeniť alebo obnoviť automatický režim. Ručný výber zostáva pri úpravách textu aj obnovení stránky. Žiadny text sa neposiela na server ani do AI služby.
+Text možnosti môže mať najviac 40 znakov; počítadlo je pri každom políčku. Ikonky sa priraďujú priebežne z lokálneho slovníka slovenských/českých jedál, nápojov a aktivít, aj bez diakritiky. Konkrétne jedlá majú prednosť pred všeobecnými ingredienciami. Nerozpoznaný text dostane neutrálny symbol: ✨ v Hravom vzhľade alebo kocku v realistických vzhľadoch. Emoji napísané priamo v texte má prednosť. Kliknutím na ikonku možno otvoriť výber, ručne ju zmeniť alebo obnoviť automatický režim. Ručný výber zostáva pri úpravách textu aj obnovení stránky. Žiadny text sa neposiela na server ani do AI služby.
 
 Testy slovníka: `npm test`.
 
 ## Hra na najviac tri pokusy
 
-- Podržať možno iba valce s rovnakou možnosťou; porovnáva sa index možnosti, nie samotná ikonka. Dve jedlá s rovnakým emoji teda netvoria dvojicu.
+- V režime Hra s podržaním možno podržať iba valce s rovnakou možnosťou; porovnáva sa index možnosti, nie samotná ikonka. Dve jedlá s rovnakým emoji teda netvoria dvojicu.
 - Podržanie sa dá medzi pokusmi uvoľniť. Nezlučiteľné podržania sú zakázané, aby tretí pokus mohol zachovať všetky podržané valce a zároveň priniesť trojicu.
 - Vlastné možnosti sa počas roztočenej hry zamknú; tlačidlo Upraviť možnosti alebo výber inej predvoľby začnú novú dilemu. Po verdikte sa možnosti dajú opäť upravovať. Pokus sa uloží pred animáciou; obnovenie stránky nedá ďalší pokus ani druhý záznam do histórie.
-- Po verdikte sa páka zamkne a hlavné zelené tlačidlo sa zmení na Nová dilema. Otvorí tri prázdne možnosti pre ďalšiu otázku a presunie na ne zobrazenie aj fokus. Predvoľby zostávajú použiteľné; výber inej témy, úprava názvu či pridanie/odstránenie možnosti začnú novú dilemu. Zmena samotnej ikonky neobnoví pokusy.
+- Po verdikte sa páka zamkne a hlavné tlačidlo sa zmení na Nová dilema. Otvorí tri prázdne možnosti pre ďalšiu otázku a presunie na ne zobrazenie aj fokus. Predvoľby zostávajú použiteľné; výber inej témy, úprava názvu či pridanie/odstránenie možnosti začnú novú dilemu. Zmena samotnej ikonky neobnoví pokusy.
 - Bežné výherné automaty trojicu negarantujú. Garantovaný tretí pokus je zámerná úprava pre rozhodovaciu hru.
 - `npm test` overuje slovník ikoniek aj logiku pokusov, podržania, obnovy a konečného verdiktu.
 
@@ -47,8 +47,14 @@ Voliteľné prehliadačové regresné testy: pri spustenej aplikácii a dostupno
 
 ## Vzhľad aplikácie
 
-Hamburger menu vpravo hore ponúka Dark a Light. Voľba sa ukladá samostatne od hry, počtu pokusov a histórie a použije sa aj po obnovení stránky. Menu funguje klávesnicou, zavrie sa cez Escape alebo kliknutím mimo a na malých obrazovkách obsahuje aj pomoc. Celé svetlé rozhranie zahŕňa mašinu, výsledok, podržanie, históriu aj dialógy.
+Hamburger menu ponúka štyri vzhľady: **Studio** (predvolený grafit/meď), **Retro** (chróm/smalt), **Minimal** a **Hravý** (pôvodné emoji). Nezávisle sa prepína Dark/Light. Prvé tri vzhľady zdieľajú lokálnu sadu 16 realistických predmetov v `src/assets/objects.png`, vygenerovanú pre tento projekt. Slovník vyberá význam a `src/symbols.ts` mapuje podporované ikonky na obrázky; ostatné dostanú neutrálnu kocku. Celá sada sa načíta ako jeden lokálny súbor bez externých služieb.
 
-Návrhy ďalšieho grafického smeru, realistických ikoniek a rešerš podobných projektov sú v [docs/design-v2.md](docs/design-v2.md). Sú to návrhy na spoločný výber, nie implementovaná druhá verzia. Súčasné ikonky zostávajú zachované.
+Menu obsahuje tiež zvuk, pravidlá a výber herného režimu. Pravidlá možno meniť iba pred prvým pokusom novej dilemy. Zmena grafiky ani Dark/Light nemení žrebovanie, podržanie, počet pokusov alebo históriu. Staršie uložené hry bez označenia režimu sa obnovia ako Hra s podržaním, aby sa nestratili ich pravidlá; nové inštalácie začínajú Čistou náhodou. Po otvorení Novej dilemy možno prepnúť režim.
+
+Valce majú viditeľné susedné položky, postupné zastavenie, zvuk dosadnutia a pákové ovládanie. Enter presúva medzi možnosťami a na konci pridá ďalšiu (do limitu päť). Na mobile je mašina nad editorom možností. Zvuk a obmedzený pohyb sú rešpektované. Vzhľad a hra sa ukladajú lokálne; rozdielne adresy LAN/Tailscale a rôzne prehliadače nemajú spoločné úložisko.
+
+Podkladová štúdia a matematika šancí sú v [docs/machine-study.md](docs/machine-study.md). Pôvodné koncepty sú v [docs/design-v2.md](docs/design-v2.md).
+
+`npm test` zahŕňa úplný výpočet symetrie výsledkov pre 2–5 možností, migráciu starých hier, odmietnutie skresľujúceho zvyšku generátora a oba režimy. Prehliadačové testy overujú všetky štyri vzhľady × oba farebné režimy × štyri šírky, zamknutie pravidiel, tretí pokus, držanie, uloženie počas animácie, klávesnicu, zvuk a pokračovanie po výsledku.
 
 Všetky prehliadačové kontroly: `python3 -m unittest discover -s tests -p 'browser_*.py' -v` (vyžaduje bežiacu aplikáciu a Python Playwright/Chromium).

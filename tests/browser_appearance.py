@@ -104,7 +104,7 @@ class AppearanceTests(unittest.TestCase):
         self.page.keyboard.press('Escape')
         expect(self.page.locator('#app')).not_to_have_class('is-spinning', timeout=6000)
         self.assertEqual(self.page.evaluate('JSON.parse(localStorage.getItem("osud-v1")).round.attempts'), 1)
-        expect(self.page.locator('[data-hold="0"]')).to_be_enabled()
+        expect(self.page.locator('#hold-controls')).to_be_hidden()
         expect(self.page.locator('html')).to_have_attribute('data-theme', 'light')
 
     def test_menu_works_when_browser_storage_is_unavailable(self):

@@ -92,3 +92,9 @@ Nahraj nový obsah balíka do rovnakého priečinka a znovu spusti `docker compo
 ## Spustenie zo zdrojového repozitára
 
 Pri práci na zdrojovom kóde na vývojovom počítači spusti `npm ci`, `npm test` a `npm run build`. Build zároveň obnoví verzovaný priečinok `deploy/site`. Zdrojové zmeny aj tento priečinok odošli spolu na GitHub. Docker v hlavnom repozitári nasadzuje `deploy/site`; ZIP používa hotový `dist`. Ani jedna cesta nevyžaduje Node.js na CasaOS serveri.
+
+## Ikona na ploche mobilu
+
+V aplikácii otvor ☰ → Pridať na plochu. Na iPhone použi Safari → Zdieľať → Pridať na plochu; na Androide menu prehliadača → Pridať na plochu. Na dnešnej HTTP adrese môže ísť iba o odkaz a na otvorenie potrebuješ dostupný server. Pre plnú inštaláciu a offline režim treba aplikáciu sprístupniť cez HTTPS; samotná aktualizácia Docker obrazu HTTPS nezapína. Mimo domova používaj odkaz s Tailscale adresou a zapnutý Tailscale.
+
+Moje dilemy a aktuálna hra sa ukladajú v prehliadači, nie na CasaOS. Rôzne adresy a prehliadače majú oddelené úložisko.

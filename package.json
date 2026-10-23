@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build && node scripts/prepare-casaos.mjs",
+    "build": "tsc --noEmit && vite build && node scripts/prepare-pwa.mjs && node scripts/prepare-casaos.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "test": "node --experimental-strip-types --test tests/*.test.mjs"
   },

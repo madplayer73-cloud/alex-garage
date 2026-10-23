@@ -62,3 +62,17 @@ Všetky prehliadačové kontroly: `python3 -m unittest discover -s tests -p 'bro
 ## Vlastné možnosti a predvoľby
 
 Doplnené rozpoznávanie PS5/PS4/PS3, Nintendo, Steam a výrazu codovať. Pracovať aj kódovať používajú obrázok notebooku, PS5 obrázok ovládača. Každá ponúkaná ikonka má realistický obrázok aj v ručnom výbere. Pri možnosti je viditeľné Auto alebo Ručná; kliknutím na Ručná sa obnoví automatický výber podľa textu. Ponuka obsahuje 12 hotových dilem vrátane hier, práce, pohybu, nápojov, raňajok, oddychu, sladkostí a domácnosti.
+
+## Moje dilemy a vlastná otázka
+
+Nad mašinou je nepovinná otázka do 80 znakov. Ukladá sa s aktuálnou hrou. Počas rozbehnutej dilemy sa otázka zamkne rovnako ako možnosti. Nová dilema ju vymaže; úprava existujúcej hry ju ponechá.
+
+Tlačidlo **Uložiť dilemu** uloží otázku/názov a 2–5 možností vrátane ručných ikoniek do samostatného localStorage `osud-dilemmas-v1` (najviac 30 záznamov). Zoznam **Moje dilemy** ponúka otvorenie, úpravu a odstránenie. Pri úprave načítanej dilemy možno **Uložiť zmeny** alebo **Uložiť ako novú**. Hotové predvoľby sa nemenia: používateľ ich načíta, upraví a uloží svoju verziu. Otvorenie rovnakého záznamu neobnovuje rozbehnuté pokusy; tlačidlo Upraviť výslovne začína novú hru. Neúspešný zápis do úložiska zobrazí chybu a nepredstiera uloženie.
+
+## Pridanie na plochu a offline
+
+Hamburger menu → **Pridať na plochu** otvorí postup pre daný prehliadač. Pri podporovanej inštalácii sa ponúkne natívne tlačidlo. Súčasťou buildu je manifest, PNG ikonky vrátane Apple ikony a verzovaný service worker. Na HTTPS alebo localhost sa po úspešnom prvom načítaní uloží celý statický obsah pre offline použitie. Aktualizácia čakajúceho service workera sa ponúkne v hamburger menu, používateľ ju spustí sám. Aktuálna hra aj dilemy ostávajú v localStorage.
+
+**Na súčasných HTTP adresách `192.168.1.140:8099` a `100.107.191.11:8099` nie je dostupný service worker ani zaručená plná PWA inštalácia.** Prehliadač môže vytvoriť odkaz na plochu; aplikácia potom vyžaduje pripojenie k serveru (mimo domova aj Tailscale). Plná PWA a offline vyžadujú HTTPS na serveri, ktoré táto zmena automaticky nekonfiguruje. Ukladanie je viazané na prehliadač a adresu, presun na inú adresu/HTTPS automaticky neprenesie už uložené dáta.
+
+Build generuje `dist/sw.js` cez `scripts/prepare-pwa.mjs` a potom celý výstup kopíruje do `deploy/site`. Nginx podáva manifest so správnym MIME typom a service worker bez cache. Prehliadačové testy overujú uloženie/úpravu/kópiu/vymazanie, chybné úložisko, mobil, zachovanie pokusov, manifest/ikonky, inštalačný dialóg a skutočné offline načítanie po registrácii service workera na localhost.

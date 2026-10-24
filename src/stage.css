@@ -46,3 +46,8 @@
  #app.stage-open .machine-area{--reel-height:max(150px,calc(100dvh - 470px));--reel-peek:12px}
  #app.stage-open .reel-emoji{width:min(100%,max(85px,calc(100dvh - 650px)))}
 }
+#start-dialog fieldset{display:grid;gap:18px;border:1px solid var(--border);border-radius:10px;padding:18px}#start-dialog label{display:flex;gap:10px;line-height:1.5;font-size:14px}
+#app.stage-open .lever{display:block;touch-action:none}
+#app.stage-open .machine-and-lever{margin-right:44px}
+#app.stage-open .spin-controls{min-height:20px}
+@media(max-width:760px){#app.stage-open .lever{right:-40px;transform:scale(.75);transform-origin:center}#app.stage-open .machine-and-lever{margin-right:40px}}

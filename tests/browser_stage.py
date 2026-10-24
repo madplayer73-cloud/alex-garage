@@ -53,6 +53,7 @@ class StageTests(MachineBrowserCase):
                     self.page.locator(f'[name="theme"][value="{theme}"]').check();self.page.keyboard.press('Escape')
                     expect(self.page.locator('#stage-back')).to_be_visible()
                     self.assertLessEqual(self.page.evaluate('document.documentElement.scrollWidth'),width)
+                    self.assertGreater(self.page.locator('.machine-area').bounding_box()['width'],width*.9)
                     for selector in ['#spin','#result','#stage-back']:
                         box=self.page.locator(selector).bounding_box()
                         self.assertGreaterEqual(box['x'],0)

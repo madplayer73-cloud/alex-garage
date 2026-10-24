@@ -33,3 +33,16 @@
  #app.stage-open .machine-area{max-width:760px;--reel-height:140px;--reel-peek:12px}
  #app.stage-open .reel-emoji{width:95px;font-size:65px}
 }
+/* The stage fills the viewport instead of retaining the editor's content width. */
+#app.stage-open{min-height:100dvh}
+#app.stage-open .header{max-width:none;width:100%}
+#app.stage-open main{max-width:none;width:100%;padding:0 20px}
+#app.stage-open .playground{min-height:calc(100dvh - 64px);padding:8px 0 12px}
+#app.stage-open .machine-area{max-width:none;--reel-height:max(140px,calc(100dvh - 490px));--reel-peek:16px}
+#app.stage-open .reel-emoji{width:min(85%,max(95px,calc(100dvh - 600px)));font-size:clamp(60px,16dvh,180px)}
+@media(max-width:760px){
+ #app.stage-open main{padding:0 8px}
+ #app.stage-open .playground{min-height:calc(100dvh - 60px)}
+ #app.stage-open .machine-area{--reel-height:max(150px,calc(100dvh - 470px));--reel-peek:12px}
+ #app.stage-open .reel-emoji{width:min(100%,max(85px,calc(100dvh - 650px)))}
+}

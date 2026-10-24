@@ -61,3 +61,7 @@ Dark/Light je nezávislé od štýlu, Minimal preto nie je iba názov svetlého 
 ## Overenie pri implementácii
 
 Overiť symetriu výsledkov matematicky a testami vetiev pravidiel, tretí pokus, podržanie, obnovu stránky a neplatný uložený stav. Náhodný štatistický test sám osebe nie je dôkazom férovosti. V prehliadači preveriť všetky vzhľady na mobile, zmenu štýlu bez resetu, ovládanie klávesnicou, vypnutý zvuk, obmedzený pohyb a návrat zo skrytej karty. Zachovať existujúce testy pokračovania po výsledku.
+
+## Veľké zobrazenie — 24. 10. 2026
+
+Po príprave možností oddeľujeme zadávanie od samotného točenia. Vedome ponechávame výslovné tlačidlo vstupu: automat sa nezväčší počas písania ani po kliknutí na predvoľbu, ktorú používateľ ešte môže upravovať. Vstup nevyžrebuje výsledok. Otázka zostáva nad mašinou, ovládanie a výsledok pod ňou, nastavenia v pôvodnom hamburger menu. Návrat zachová hru, nová dilema vráti editor. Implementácia používa responzívne rozloženie namiesto Fullscreen API, aby zostala dostupná na HTTP LAN/Tailscale aj v mobilnom prehliadači. Na malom displeji nahrádza bočnú páku hlavné tlačidlo. Overené snímkami PC/mobilu a prehliadačovými testami všetkých štyroch vzhľadov a oboch farebných režimov pri šírkach 320–1920 px vrátane orientácie na šírku.

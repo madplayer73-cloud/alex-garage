@@ -88,3 +88,9 @@ Compose spúšťa okrem webu aj službu `photos` (Node.js v kontajneri, bez inš
 Úložisko nemá používateľské účty: kto má prístup k tejto súkromnej aplikácii na LAN/Tailscale, môže obrázky čítať a importovať. Backend nemá samostatný verejný port; web ho sprístupňuje cez `/api/photos`. Pri nedostupnom úložisku hra funguje so zabudovanými ikonami, import oznámi chybu. Vlastné fotografie vyžadujú spojenie so serverom, nie sú súčasťou offline PWA balíka.
 
 Vývoj importu: `PHOTO_DATA_DIR=/tmp/osud-dev-photos PORT=8080 node server/photos.mjs`; pri samotnom Vite prehliadači treba `/api/` smerovať na tento server. Úplné prostredie poskytne `docker compose up -d --build`. Jednotkové testy úložiska spúšťa `npm test`. Prehliadačové testy importu spúšťaj iba proti izolovanému testovaciemu Compose s prázdnym `OSUD_PHOTO_DIR`: `OSUD_PHOTO_INTEGRATION=1 OSUD_TEST_URL=http://127.0.0.1:18104 python3 -m unittest discover -s tests -p 'browser_photos.py' -v`. Testy nahrávajú a nahrádzajú testovacie obrázky.
+
+## Veľký automat
+
+Po zadaní možností stlač **Možnosti sú pripravené →**, prípadne **Zväčšiť automat** nad mašinou. Editor, úvod a história ustúpia a automat využije hlavný priestor obrazovky. Otvorenie overí vyplnené a rozdielne možnosti, ale nespotrebuje pokus. Otázka, oba herné režimy, štyri vzhľady, Dark/Light, zvuk a importované obrázky zostávajú dostupné. Na mobile sa bočná páka skryje, aby mali valce viac miesta; točí sa veľkým tlačidlom.
+
+**Späť k možnostiam** alebo Escape vráti pôvodné rozhranie bez zmeny hry. Počas animácie je prepnutie zablokované; Escape najprv zatvára otvorené menu alebo dialóg. **Nová dilema** otvorí editor prázdnych možností. Zväčšenie sa pamätá počas otvorenej karty aj po obnovení stránky, ak prehliadač umožňuje sessionStorage. Ide o rozloženie stránky, takže funguje aj na HTTP adresách CasaOS bez oprávnenia na fullscreen. Na nízkych obrazovkách sa dá posunúť k výsledku.

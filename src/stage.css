@@ -1,0 +1,35 @@
+.stage-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 34px 16px 0}.stage-toolbar button{min-height:44px;font-size:12px}.stage-toolbar span{font-size:16px;overflow-wrap:anywhere;text-align:right;color:var(--green);max-width:65%}
+#app.stage-open .intro,#app.stage-open .choices-panel,#app.stage-open .library-section,#app.stage-open .history-section,#app.stage-open>footer,#app.stage-open .machine-caption,#app.stage-open .question-box{display:none}
+#app.stage-open .header{height:64px;max-width:1600px;padding:0 32px}
+#app.stage-open main{max-width:1200px;margin:0 auto;padding:0 28px}
+#app.stage-open .playground{display:block;padding:12px 0 24px}
+#app.stage-open .machine-area{width:100%;max-width:1000px;margin:0 auto;--reel-height:clamp(180px,28dvh,340px);--reel-peek:22px}
+#app.stage-open .stage-toolbar{margin-bottom:10px}
+#app.stage-open .machine-title{margin:12px 0;font-size:clamp(14px,2vw,24px)}
+#app.stage-open .reel-emoji{width:min(100%,clamp(100px,18dvh,230px));font-size:clamp(65px,12dvh,125px)}
+#app.stage-open .reel-label{font-size:clamp(12px,1.3vw,18px);overflow-wrap:anywhere}
+#app.stage-open .machine-shadow{height:12px}
+#app.stage-open .spin-controls{margin-top:0;gap:8px}
+#app.stage-open .spin-hint{display:none}
+#app.stage-open .result{margin-top:12px;min-height:76px}
+#app.stage-open .game-mode,#app.stage-open .round-progress{margin-bottom:10px}
+@media(max-width:760px){
+ #app.stage-open .header{padding:0 18px;height:60px}
+ #app.stage-open main{padding:0 12px}
+ #app.stage-open .machine-area{--reel-height:clamp(150px,27dvh,240px);--reel-peek:16px}
+ #app.stage-open .stage-toolbar{margin-right:0;gap:8px}
+ #app.stage-open .stage-toolbar span{font-size:13px;max-width:52%}
+ #app.stage-open .machine-and-lever,#app.stage-open .spin-controls,#app.stage-open .result,#app.stage-open .game-mode,#app.stage-open .round-progress{margin-right:0}
+ #app.stage-open .lever{display:none}
+ #app.stage-open .machine{padding:12px}
+ #app.stage-open .machine-title{font-size:13px;letter-spacing:1px}
+ #app.stage-open .reel-emoji{width:min(100%,115px);font-size:60px}
+ #app.stage-open .reel-label{font-size:11px}
+ #app.stage-open .result{padding:13px;gap:10px}
+ #app.stage-open .result strong{font-size:18px}
+ #app.stage-open .winner-spark{display:none}
+}
+@media(max-height:650px) and (min-width:761px){
+ #app.stage-open .machine-area{max-width:760px;--reel-height:140px;--reel-peek:12px}
+ #app.stage-open .reel-emoji{width:95px;font-size:65px}
+}

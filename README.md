@@ -94,3 +94,7 @@ Vývoj importu: `PHOTO_DATA_DIR=/tmp/osud-dev-photos PORT=8080 node server/photo
 Po zadaní možností stlač **Možnosti sú pripravené →**, prípadne **Zväčšiť automat** nad mašinou. Editor, úvod a história ustúpia a automat využije hlavný priestor obrazovky. Otvorenie overí vyplnené a rozdielne možnosti, ale nespotrebuje pokus. Otázka, oba herné režimy, štyri vzhľady, Dark/Light, zvuk a importované obrázky zostávajú dostupné. Na mobile sa bočná páka skryje, aby mali valce viac miesta; točí sa veľkým tlačidlom.
 
 **Späť k možnostiam** alebo Escape vráti pôvodné rozhranie bez zmeny hry. Počas animácie je prepnutie zablokované; Escape najprv zatvára otvorené menu alebo dialóg. **Nová dilema** otvorí editor prázdnych možností. Zväčšenie sa pamätá počas otvorenej karty aj po obnovení stránky, ak prehliadač umožňuje sessionStorage. Ide o rozloženie stránky, takže funguje aj na HTTP adresách CasaOS bez oprávnenia na fullscreen. Na nízkych obrazovkách sa dá posunúť k výsledku.
+
+### TEST v0.3.0 — proporcie herného priestoru
+
+Herný režim má samostatné čierne pozadie aj pri svetlej téme editora. Šírka stroja je ohraničená, výška valcov má spodný aj horný limit; displej sa nevyplňuje natiahnutím valcov. Názov dilemy je nad strojom, hláška pod ním bez ďalšej karty a opisných odsekov. Bočná páka a podržanie zostávajú dostupné aj na mobile. Overené rozloženie pri šírkach 320, 390, 430 a 1440 px vo všetkých vzhľadoch a oboch témach vrátane viditeľnosti výsledku bez posúvania na testovaných výškach 680–900 px.

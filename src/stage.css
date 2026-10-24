@@ -1,68 +1,61 @@
-.stage-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 34px 16px 0}.stage-toolbar button{min-height:44px;font-size:12px}.stage-toolbar span{font-size:16px;overflow-wrap:anywhere;text-align:right;color:var(--green);max-width:65%}
+/* Preparation stays in the editor; play gets a quiet, self-contained stage. */
+.stage-toolbar{display:flex;align-items:center;gap:12px;margin:0 34px 16px 0}.stage-toolbar button{min-height:40px;font-size:12px}.build-badge{font-size:9px;letter-spacing:1.4px;color:var(--green);white-space:nowrap;padding:5px 8px;border:1px solid var(--border);border-radius:20px}
+#start-dialog fieldset{display:grid;gap:18px;border:1px solid var(--border);border-radius:10px;padding:18px}#start-dialog label{display:flex;gap:10px;font-size:14px;line-height:1.5}
+#app.stage-open{min-height:100dvh;background:radial-gradient(ellipse at 50% 48%,#342b233b,transparent 65%),#08090b;color:#eee9e1}
 #app.stage-open .intro,#app.stage-open .choices-panel,#app.stage-open .library-section,#app.stage-open .history-section,#app.stage-open>footer,#app.stage-open .machine-caption,#app.stage-open .question-box{display:none}
-#app.stage-open .header{height:64px;max-width:1600px;padding:0 32px}
-#app.stage-open main{max-width:1200px;margin:0 auto;padding:0 28px}
+#app.stage-open .header{height:52px;max-width:none;padding:0 22px;border-color:#ffffff0c;background:#08090b}
+#app.stage-open .header-note,#app.stage-open #help{display:none}
+#app.stage-open .brand{font-size:25px}
+#app.stage-open main{width:100%;max-width:980px;padding:0 24px;margin:auto}
 #app.stage-open .playground{display:block;padding:12px 0 24px}
-#app.stage-open .machine-area{width:100%;max-width:1000px;margin:0 auto;--reel-height:clamp(180px,28dvh,340px);--reel-peek:22px}
-#app.stage-open .stage-toolbar{margin-bottom:10px}
-#app.stage-open .machine-title{margin:12px 0;font-size:clamp(14px,2vw,24px)}
-#app.stage-open .reel-emoji{width:min(100%,clamp(100px,18dvh,230px));font-size:clamp(65px,12dvh,125px)}
-#app.stage-open .reel-label{font-size:clamp(12px,1.3vw,18px);overflow-wrap:anywhere}
-#app.stage-open .machine-shadow{height:12px}
-#app.stage-open .spin-controls{margin-top:0;gap:8px}
-#app.stage-open .spin-hint{display:none}
-#app.stage-open .result{margin-top:12px;min-height:76px}
-#app.stage-open .game-mode,#app.stage-open .round-progress{margin-bottom:10px}
-@media(max-width:760px){
- #app.stage-open .header{padding:0 18px;height:60px}
- #app.stage-open main{padding:0 12px}
- #app.stage-open .machine-area{--reel-height:clamp(150px,27dvh,240px);--reel-peek:16px}
- #app.stage-open .stage-toolbar{margin-right:0;gap:8px}
- #app.stage-open .stage-toolbar span{font-size:13px;max-width:52%}
- #app.stage-open .machine-and-lever,#app.stage-open .spin-controls,#app.stage-open .result,#app.stage-open .game-mode,#app.stage-open .round-progress{margin-right:0}
- #app.stage-open .lever{display:none}
- #app.stage-open .machine{padding:12px}
- #app.stage-open .machine-title{font-size:13px;letter-spacing:1px}
- #app.stage-open .reel-emoji{width:min(100%,115px);font-size:60px}
- #app.stage-open .reel-label{font-size:11px}
- #app.stage-open .result{padding:13px;gap:10px}
- #app.stage-open .result strong{font-size:18px}
- #app.stage-open .winner-spark{display:none}
-}
-@media(max-height:650px) and (min-width:761px){
- #app.stage-open .machine-area{max-width:760px;--reel-height:140px;--reel-peek:12px}
- #app.stage-open .reel-emoji{width:95px;font-size:65px}
-}
-/* The stage fills the viewport instead of retaining the editor's content width. */
-#app.stage-open{min-height:100dvh}
-#app.stage-open .header{max-width:none;width:100%}
-#app.stage-open main{max-width:none;width:100%;padding:0 20px}
-#app.stage-open .playground{min-height:calc(100dvh - 64px);padding:8px 0 12px}
-#app.stage-open .machine-area{max-width:none;--reel-height:max(140px,calc(100dvh - 490px));--reel-peek:16px}
-#app.stage-open .reel-emoji{width:min(85%,max(95px,calc(100dvh - 600px)));font-size:clamp(60px,16dvh,180px)}
-@media(max-width:760px){
- #app.stage-open main{padding:0 8px}
- #app.stage-open .playground{min-height:calc(100dvh - 60px)}
- #app.stage-open .machine-area{--reel-height:max(150px,calc(100dvh - 470px));--reel-peek:12px}
- #app.stage-open .reel-emoji{width:min(100%,max(85px,calc(100dvh - 650px)))}
-}
-#start-dialog fieldset{display:grid;gap:18px;border:1px solid var(--border);border-radius:10px;padding:18px}#start-dialog label{display:flex;gap:10px;line-height:1.5;font-size:14px}
-#app.stage-open .lever{display:block;touch-action:none}
-#app.stage-open .machine-and-lever{margin-right:44px}
-#app.stage-open .spin-controls{min-height:20px}
-@media(max-width:760px){#app.stage-open .lever{right:-40px;transform:scale(.75);transform-origin:center}#app.stage-open .machine-and-lever{margin-right:40px}}
-.build-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:1px;color:var(--green);white-space:nowrap;border:1px solid var(--border);border-radius:5px;padding:5px 8px}
-#app.stage-open .stage-toolbar{margin-bottom:2px;min-height:36px;flex-wrap:wrap}
-#app.stage-open .stage-toolbar button{min-height:36px}
-#app.stage-open .game-mode{margin-bottom:4px}
-#app.stage-open .round-progress{margin-bottom:5px}
-#app.stage-open .machine-top,#app.stage-open .machine-bottom,#app.stage-open .machine-shadow,#app.stage-open #hold-hint{display:none}
-#app.stage-open .machine-title{margin:8px 0}
-#app.stage-open .machine-area{--reel-height:max(180px,calc(100dvh - 340px));--reel-peek:12px}
-#app.stage-open .result{min-height:56px;padding:10px;margin-top:6px}
+#app.stage-open .machine-area{width:100%;max-width:860px;margin:auto;--reel-height:clamp(150px,30dvh,300px);--reel-peek:14px}
+#app.stage-open .stage-toolbar{display:grid;grid-template-columns:1fr auto auto;gap:8px;margin:0 0 14px}
+#app.stage-open #stage-back{justify-self:start;color:#a29c93;font-size:11px}
+#app.stage-open #stage-question{grid-column:1/-1;grid-row:2;max-width:100%;text-align:center;font-family:Georgia,serif;font-size:clamp(22px,3vw,32px);letter-spacing:-.5px;color:#f3e9d8;margin:6px 0 4px;overflow-wrap:anywhere}
+#app.stage-open #stage-fullscreen{font-size:0;width:32px;height:32px;min-height:32px;border:1px solid #ffffff20;border-radius:50%}
+#app.stage-open #stage-fullscreen:after{content:'⛶';font-size:19px}
+#app.stage-open .game-mode{margin:0 44px 6px 0;font-size:8px;letter-spacing:1.4px}
+#app.stage-open .game-mode>span+span{display:none}
+#app.stage-open .round-progress{margin:0 44px 16px 0;gap:10px}
+#app.stage-open .round-status{margin-left:auto;font-size:7px;opacity:.65}
+#app.stage-open .machine-and-lever{margin-right:38px}
+#app.stage-open .machine{padding:16px;border-radius:24px;box-shadow:0 1px 0 #ffffff60 inset,0 0 0 4px #171718,0 0 0 5px var(--shell-edge,#77607f),0 25px 55px #000b,0 0 65px #d9ac7120}
+#app.stage-open .machine-title{margin:4px 0 16px;font-size:clamp(12px,1.5vw,17px);letter-spacing:3px}
+#app.stage-open .machine-top,#app.stage-open .machine-bottom,#app.stage-open .machine-shadow,#app.stage-open #hold-hint,#app.stage-open .spin-hint{display:none}
+#app.stage-open .reels-frame{padding:5px;border-radius:12px}
+#app.stage-open .reel-item{padding:7px;gap:10px}
+#app.stage-open .reel-emoji{width:min(100%,clamp(100px,18dvh,185px));font-size:clamp(55px,10dvh,110px)}
+#app.stage-open .reel-label{font-size:clamp(10px,1.2vw,15px);min-height:28px;line-height:1.3}
+#app.stage-open .lever{display:block;touch-action:none;right:-36px}
+#app.stage-open .hold-controls{margin-top:12px;gap:6px}
+#app.stage-open .hold-button{min-height:36px;font-size:9px;padding:8px 3px;border-radius:7px}
+#app.stage-open .spin-controls{margin:14px 38px 0 0;gap:0;min-height:0}
+#app.stage-open .result{margin:18px 38px 0 0;background:transparent;border:0;border-top:1px solid #ffffff18;border-radius:0;box-shadow:none;padding:16px 0;min-height:66px;gap:12px}
+#app.stage-open .result strong{color:#eee3d4;font-size:clamp(15px,2vw,21px);font-weight:500}
 #app.stage-open .result p{display:none}
-#app.stage-open .spin-controls{min-height:0;margin-top:0;gap:0}
-#app.stage-open .reel-emoji{width:min(100%,max(100px,calc(100dvh - 520px)))}
-#app.stage-open .stage-toolbar .build-badge{margin-left:auto}
-#stage-fullscreen{font-size:11px}
-@media(max-width:760px){#app.stage-open .header{height:48px}#app.stage-open .machine{padding:8px}#app.stage-open .machine-area{--reel-height:max(180px,calc(100dvh - 330px))}#app.stage-open .machine-title{font-size:11px}#app.stage-open .stage-toolbar span{font-size:11px}#app.stage-open .reel-emoji{width:min(100%,140px)}}
+#app.stage-open .result-icon{font-size:24px}
+#app.stage-open .winner-spark{display:none}
+#app.stage-open .winner-kicker{font-size:8px;letter-spacing:2px}
+@media(max-width:760px){
+ #app.stage-open main{padding:0 14px}
+ #app.stage-open .header{height:46px;padding:0 16px}
+ #app.stage-open .menu-toggle,#app.stage-open .sound-button{width:34px;height:34px}
+ #app.stage-open .playground{padding-top:5px}
+ #app.stage-open .stage-toolbar{margin-bottom:10px}
+ #app.stage-open #stage-question{font-size:24px;margin-top:0}
+ #app.stage-open .machine-area{--reel-height:clamp(150px,29dvh,265px);--reel-peek:10px}
+ #app.stage-open .machine{padding:12px 9px;border-radius:22px}
+ #app.stage-open .machine-title{font-size:10px;letter-spacing:2px;margin:3px 0 12px}
+ #app.stage-open .machine-and-lever{margin-right:27px}
+ #app.stage-open .lever{right:-33px;scale:.72;transform-origin:center}
+ #app.stage-open .reel-emoji{width:min(100%,120px);font-size:57px}
+ #app.stage-open .reel-item{padding:4px;gap:8px}
+ #app.stage-open .reel-label{font-size:10px}
+ #app.stage-open .game-mode,#app.stage-open .round-progress{margin-right:28px}
+ #app.stage-open .round-progress{margin-bottom:12px}
+ #app.stage-open .result,#app.stage-open .spin-controls{margin-right:27px}
+ #app.stage-open .result{margin-top:14px;padding-top:12px}
+ #app.stage-open .round-status{display:none}
+}
+@media(max-height:550px) and (min-width:761px){#app.stage-open main{max-width:680px}#app.stage-open .machine-area{--reel-height:130px;--reel-peek:8px}#app.stage-open .header{height:40px}#app.stage-open #stage-question{font-size:21px;margin:0}#app.stage-open .reel-emoji{width:85px}}
+@media(prefers-reduced-motion:no-preference){#app.stage-open .machine{animation:stage-reveal .55s ease-out both}@keyframes stage-reveal{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}}

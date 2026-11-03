@@ -155,3 +155,20 @@ It writes only its test photo and starts/stops only the two fixed
 `osud-power-check-*` containers. Remove the disposable project afterward using
 `docker compose -p osud-power-check down` with the same Compose variables; never use
 `down -v` against production. Gateway production container allowlists remain unchanged.
+
+### Local import of a downloaded Google client
+
+Instead of manually copying credentials into the example files, upload the web client
+JSON into the user's private directory (`~/.config/osud-setup`, mode 700), chmod the
+JSON to 600, then run on CasaOS:
+
+```sh
+sudo python3 power/configure.py --client-file /home/casaos/.config/osud-setup/google-client.json --origin https://casaos.tailbeb6ab.ts.net:8459
+```
+
+The script asks for the allowed Google email, checks the redirect URI, and writes a
+fresh root-owned `/etc/osud-power` configuration with a generated cookie key. It never
+prints credentials, starts services or changes existing configuration. If the directory
+already exists it refuses to overwrite it. Once sign-in is verified, remove the uploaded
+JSON from the server if it is no longer needed; retain a secure copy of the client
+credentials independently. Do not send the JSON to chat or add it to Git.

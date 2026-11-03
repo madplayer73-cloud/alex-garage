@@ -59,3 +59,4 @@
 }
 @media(max-height:550px) and (min-width:761px){#app.stage-open main{max-width:680px}#app.stage-open .machine-area{--reel-height:130px;--reel-peek:8px}#app.stage-open .header{height:40px}#app.stage-open #stage-question{font-size:21px;margin:0}#app.stage-open .reel-emoji{width:85px}}
 @media(prefers-reduced-motion:no-preference){#app.stage-open .machine{animation:stage-reveal .55s ease-out both}@keyframes stage-reveal{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}}
+#power-status{grid-column:1/-1;color:#dfb58e;font-size:12px;margin:0}#power-status:empty{display:none}

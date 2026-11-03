@@ -98,3 +98,17 @@ Po zadaní možností stlač **Možnosti sú pripravené →**, prípadne **Zvä
 ### TEST v0.3.0 — proporcie herného priestoru
 
 Herný režim má samostatné čierne pozadie aj pri svetlej téme editora. Šírka stroja je ohraničená, výška valcov má spodný aj horný limit; displej sa nevyplňuje natiahnutím valcov. Názov dilemy je nad strojom, hláška pod ním bez ďalšej karty a opisných odsekov. Bočná páka a podržanie zostávajú dostupné aj na mobile. Overené rozloženie pri šírkach 320, 390, 430 a 1440 px vo všetkých vzhľadoch a oboch témach vrátane viditeľnosti výsledku bez posúvania na testovaných výškach 680–900 px.
+
+## Voliteľné zabezpečené uspávanie
+
+Samostatná brána Osudu, Google prihlásenie a 15-minútová nečinnosť sú pripravené
+v [power/README.md](power/README.md). Nie sú automaticky aktivované bežnou aktualizáciou.
+Existujúce Folio/Gym80 služby zostávajú nedotknuté. Pred nasadením spusti iba
+`sudo python3 power/preflight.py` na CasaOS; diagnostika nič nemení a nevypisuje
+prihlasovacie údaje. Potrebný je vlastný Google OAuth klient, presný zoznam emailov,
+samostatná HTTPS cesta a uzavretie priameho portu 8099 na loopback. Browser dáta pred
+prechodom na novú adresu prenes cez nové menu Export/Import dilem a histórie.
+
+Testy brány: `python3 -m unittest discover -s tests -p 'test_power_gateway.py' -v`.
+Testy používajú ovládateľné hodiny namiesto skutočného čakania 15 minút a lokálny
+HTTP stub pre Google autorizáciu; nie sú dôkazom funkčnosti Google/Tailscale na CasaOS.

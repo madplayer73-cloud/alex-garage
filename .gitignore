@@ -8,3 +8,7 @@ playwright-report/
 
 __pycache__/
 *.py[cod]
+# Dedicated host OAuth credentials must stay outside Git.
+power/oauth.env
+power/settings.env
+power/allowed-emails.txt

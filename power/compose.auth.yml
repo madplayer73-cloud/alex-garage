@@ -1,0 +1,30 @@
+name: osud-auth
+services:
+  google:
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.15.5
+    restart: unless-stopped
+    network_mode: host
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: [/tmp]
+    env_file: "${OSUD_OAUTH_ENV_FILE:-/etc/osud-power/oauth.env}"
+    volumes:
+      - /etc/osud-power/allowed-emails.txt:/etc/osud-power/allowed-emails.txt:ro
+    command:
+      - --provider=google
+      - --http-address=127.0.0.1:4198
+      - --upstream=static://202
+      - --redirect-url=${OSUD_POWER_ORIGIN:?Set the private Osud HTTPS origin}/oauth2/callback
+      - --authenticated-emails-file=/etc/osud-power/allowed-emails.txt
+      - --cookie-name=__Host-osud_auth
+      - --cookie-secure=true
+      - --cookie-httponly=true
+      - --cookie-samesite=lax
+      - --cookie-path=/
+      - --cookie-expire=12h
+      - --reverse-proxy=true
+      - --code-challenge-method=S256
+      - --skip-provider-button=true
+      - --request-logging=false
+      - --auth-logging=false

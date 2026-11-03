@@ -1,0 +1,24 @@
+[Unit]
+Description=Osud authenticated idle sleep and wake gateway
+After=docker.service network-online.target
+Requires=docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/DATA/AppData/osud/power
+EnvironmentFile=/etc/osud-power/settings.env
+ExecStart=/usr/bin/python3 /DATA/AppData/osud/power/gateway.py
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=190
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

@@ -1,3 +1,5 @@
+import {setupPower} from './power';
+import {setupTransfer} from './transfer';
 import './style.css';
 import './skins.css';
 import './features.css';
@@ -401,3 +403,5 @@ function refreshPhotoViews(){
 photoImport=setupPhotoImport({labels:()=>choices.map(c=>c.label),busy:()=>spinning,changed:refreshPhotoViews});
 
 try{if(sessionStorage.getItem('osud-stage')==='true')setStage(true,false);}catch{/* Storage may be unavailable. */}
+
+setupTransfer();setupPower();

@@ -60,4 +60,8 @@ export async function createPhotoServer({directory}){
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  const server=await createPhotoServer({directory:process.env.PHOTO_DATA_DIR||'/data'});
  server.listen(Number(process.env.PORT||8080),'0.0.0.0',()=>console.log('Osud photo storage ready'));
+ // Stop admitting connections, finish accepted uploads and their serialized writes.
+ // No forced process.exit(): pending filesystem work must complete before exit.
+ const shutdown=()=>{server.close();server.closeIdleConnections();};
+ process.once('SIGTERM',shutdown);process.once('SIGINT',shutdown);
 }

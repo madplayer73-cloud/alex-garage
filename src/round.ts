@@ -14,7 +14,7 @@ export function newRound(mode: GameMode = 'chance'): RoundState {
   return { mode, attempts: 0, reels: [-1, -1, -1], held: [false, false, false], done: false };
 }
 
-function uniformIndex(length: number): number {
+export function uniformIndex(length: number): number {
   const numbers = new Uint32Array(1);
   const limit = Math.floor(2 ** 32 / length) * length;
   do { crypto.getRandomValues(numbers); } while (numbers[0] >= limit);

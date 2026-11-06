@@ -6,7 +6,7 @@ const sheets: ReadonlyArray<readonly string[]> = [
   ['🧀','🍞','🍰','🍪','🍦','🍫','🍓','🍎','🍌','🍵','🍺','🍹','🥤','🏃','🧘','🏊'],
   ['⚽','🎾','🥾','🚶','🎮','🎵','💃','🎨','📷','🛍️','🧹','💻','📖','🛌','🎯'],
 ];
-const aliases: Record<string,string> = {'🏋️‍♂️':'🏋️','💪':'🏋️','🎬':'🍿','🌳':'🌲','🏠':'🛋️','🚴':'🚲','🎉':'🎯','👩‍🍳':'🍳','👨‍🍳':'🍳'};
+const aliases: Record<string,string> = {'🏋️‍♂️':'🏋️','💪':'🏋️','🎬':'🍿','🌳':'🌲','🏠':'🛋️','🚴':'🚲','🎉':'🎯','👩‍🍳':'🍳','👨‍🍳':'🍳','♟️':'🎯','🏓':'🎾','🔥':'🥩','🎭':'🎵','🍬':'🍫','❤️':'💃','👟':'🛍️','🚗':'🚲','📱':'💻','🏥':'✨'};
 export function symbolLocation(emoji: string): {sheet: number; index: number; known: boolean} {
   const key=aliases[emoji] ?? emoji;
   for(let sheet=0;sheet<sheets.length;sheet++) {

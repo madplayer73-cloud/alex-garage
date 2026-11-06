@@ -19,6 +19,11 @@ class MachineBrowserCase(unittest.TestCase):
         self.page.goto(os.environ.get('OSUD_TEST_URL','http://127.0.0.1:3001'),wait_until='networkidle')
     def tearDown(self):
         self.context.close();self.assertEqual(self.errors,[])
+    def preset(self,key):
+        """Presets now open the start dialog and the stage: confirm, then return to the options view."""
+        self.page.locator(f'[data-preset="{key}"]').click()
+        self.page.locator('#start-confirm').click()
+        self.page.locator('#stage-back').click()
     def state(self):
         return self.page.evaluate('JSON.parse(localStorage.getItem("osud-v1"))')
     def menu(self):

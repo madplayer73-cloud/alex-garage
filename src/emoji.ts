@@ -1,6 +1,8 @@
 // Specific dishes come before broad ingredients and activities.
 // Normalize accents so Slovak, Czech and unaccented text work alike.
+// Drinks are before desserts so "kávu a koláč" picks ☕ not 🍰.
 const rules: ReadonlyArray<readonly [string, RegExp]> = [
+  // --- Specific dishes ---
   ['🍝', /\b(spaget\w*|cestovin\w*|pasta|lasagn\w*|lasan\w*|carbonara|bologn\w*|bolons\w*|penne|tagliatelle|makaron\w*)\b/],
   ['🥞', /\b(palacink\w*|lievanc\w*|pancake\w*|crepe\w*)\b/],
   ['🧇', /\b(wafl\w*|vafl\w*)\b/],
@@ -26,28 +28,44 @@ const rules: ReadonlyArray<readonly [string, RegExp]> = [
   ['🥪', /\b(sendvic\w*|sandwich\w*|toast\w*|toust\w*|chlebic\w*)\b/],
   ['🧀', /\b(syr|syra|syrom|syrov\w*|cheese)\b/],
   ['🍞', /\b(chlieb|chleba|chlebu|pecivo|peciva|rozok|rozky|zeml\w*)\b/],
-  ['🍰', /\b(kolac\w*|tort\w*|zakus\w*|dezert\w*|cake|cheesecake)\b/],
-  ['🍪', /\b(susien\w*|cookie\w*|keks\w*)\b/],
-  ['🍦', /\b(zmrzlin\w*|nanuk\w*|ice cream)\b/],
-  ['🍫', /\b(cokolad\w*|chocolate)\b/],
-  ['🍓', /\b(jahod\w*|strawberr\w*)\b/],
-  ['🍎', /\b(jablk\w*|ovoci\w*|ovocn\w*)\b/],
-  ['🍌', /\b(banan\w*)\b/],
+  // --- Drinks before desserts ---
   ['☕', /\b(kava|kavu|kavy|kave|kavou|kavick\w*|coffee|espresso|cappuccino|latte)\b/],
   ['🍵', /\b(caj|caju|cajom|cajik\w*|tea|matcha)\b/],
   ['🍷', /\b(vino|vina|vinu|vinom|vin\w*ko|wine|prosecco)\b/],
   ['🍺', /\b(pivo|piva|pivu|pivom|pivk\w*|beer)\b/],
   ['🍹', /\b(kokta[iy]l\w*|cocktail\w*|mojito|drink\w*)\b/],
   ['🥤', /\b(smoothie|dzus\w*|limonad\w*|cola|kofol\w*)\b/],
+  // --- Desserts & sweets ---
+  ['🍰', /\b(kolac\w*|tort\w*|zakus\w*|dezert\w*|cake|cheesecake)\b/],
+  ['🍪', /\b(susien\w*|cookie\w*|keks\w*)\b/],
+  ['🍦', /\b(zmrzlin\w*|nanuk\w*|ice cream)\b/],
+  ['🍫', /\b(cokolad\w*|chocolate)\b/],
+  ['🍬', /\b(sladk\w*|bonbon\w*|cukrik\w*|cukrov\w*|candy)\b/],
+  ['🍓', /\b(jahod\w*|strawberr\w*)\b/],
+  ['🍎', /\b(jablk\w*|ovoci\w*|ovocn\w*)\b/],
+  ['🍌', /\b(banan\w*)\b/],
+  // --- Grilling (before generic cooking) ---
+  ['🔥', /\b(gril\w*|opekac\w*|barbecue|bbq)\b/],
+  // --- Sports: specific before general ---
+  ['♟️', /\b(sach\w*|chess)\b/],
+  ['🏓', /\b(ping.?pong\w*|stoln\w+\s+tenis\w*|table.?tennis)\b/],
   ['🏋️', /\b(cvic\w*|zacvic\w*|posil\w*|fitko|fitness|gym|trening\w*|trenovat|workout)\b/],
   ['🏃', /\b(beh|behat|behan\w*|zabehat|pobehat|running|run)\b/],
   ['🚲', /\b(bicy\w*|cykl\w*|bike|biking)\b/],
   ['🧘', /\b(joga|jogu|jogy|yoga|medit\w*|pilates|stretching)\b/],
   ['🏊', /\b(plav\w*|zaplavat|bazen\w*|swim\w*)\b/],
   ['⚽', /\b(futbal\w*|fotbal\w*|football|soccer)\b/],
-  ['🎾', /\b(tenis\w*|tennis|squash|padel)\b/],
+  ['🎾', /\b(tenis(?!k)\w*|tennis|squash|padel|badminton\w*)\b/],
   ['🥾', /\b(tura|turu|tury|turistik\w*|hiking|hike)\b/],
   ['🚶', /\b(prechadz\w*|prejst|prejst sa|walk\w*)\b/],
+  // --- Life & errands ---
+  ['❤️', /\b(rande|rand\w*k\w*|schodz\w*|valentín\w*|valentin\w*)\b/],
+  ['🎭', /\b(divadl\w*|divadel\w*|muzik[aá]l\w*|musical\w*|opera|balet\w*|predstaven\w*|theatre|theater)\b/],
+  ['🚗', /\b(auto|autom|autami|sofer\w*|jazd\w*|drive|driving)\b/],
+  ['📱', /\b(volat|zavolat|telefonov\w*|telefon\w*|mobil\w*)\b/],
+  ['🏥', /\b(lekar\w*|doktor\w*|nemocnic\w*|zubar\w*|ambulanc\w*|ordina[cč]\w*)\b/],
+  ['👟', /\b(topank\w*|obuv\w*|tenisk\w*|sneaker\w*|cizm\w*|sandal\w*)\b/],
+  // --- Activities ---
   ['🌲', /\b(prirod\w*|les|lesa|lese|vylet\w*|kemp\w*|camp\w*)\b/],
   ['🍿', /\b(film\w*|kino|kina|netflix|serial\w*|movie\w*)\b/],
   ['🎮', /\b(hrat|zahrat|hry|hru|hra|gaming|ps[345]|playstation|xbox|nintendo|steam|videoh\w*)\b/],
@@ -61,15 +79,14 @@ const rules: ReadonlyArray<readonly [string, RegExp]> = [
   ['💻', /\b(prac\w*|robot\w*|kod\w*|cod\w*|programov\w*|work|coding)\b/],
   ['📖', /\b(ucit|ucen\w*|stud\w*|kurz\w*|learn\w*)\b/],
   ['🛌', /\b(spat|span\w*|zdriem\w*|vyspat|sleep|postel\w*)\b/],
-  ['🍳', /\b(varit|varen\w*|uvar\w*|upiect|pecenie|piect|cooking|obed\w*|vecera|veceru|vecere|vecerou|jedlo|jedla)\b/],
-  ['🛋️', /\b(oddych\w*|relax\w*|doma|domov|nicnerob\w*|gauc\w*)\b/],
+  ['🍳', /\b(varit|varen\w*|uvar\w*|upiect|pecenie|piect|cooking|obed\w*|vecera|veceru|vecere|vecerou|jedlo|jedla|restaur\w*|restik\w*)\b/],
+  ['🛋️', /\b(oddych\w*|relax\w*|doma|domov|nic\s*nerob\w*|gauc\w*)\b/],
 ];
 
 export const emojiOptions = [...new Set(['✨', ...rules.map(([emoji]) => emoji), '🎯'])];
 
 export function suggestEmoji(label: string): string {
-  // An explicitly typed emoji takes priority over the dictionary.
-  const typed = label.match(/\p{Extended_Pictographic}(?:\uFE0F|[\u{1F3FB}-\u{1F3FF}])*(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|[\u{1F3FB}-\u{1F3FF}])*)*/u);
+  const typed = label.match(/\p{Extended_Pictographic}(?:️|[\u{1F3FB}-\u{1F3FF}])*(?:‍\p{Extended_Pictographic}(?:️|[\u{1F3FB}-\u{1F3FF}])*)*/u);
   if (typed) return typed[0];
   const normalized = label.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
   return rules.find(([, pattern]) => pattern.test(normalized))?.[0] ?? '✨';

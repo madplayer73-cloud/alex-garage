@@ -4,6 +4,7 @@ import './style.css';
 import './skins.css';
 import './features.css';
 import './stage.css';
+import './arcade.css';
 import { setupLibrary } from './library';
 import { setupPhotoImport } from './photo-import';
 import { setupInstall } from './install';
@@ -56,7 +57,7 @@ app.innerHTML = `
     <section class="intro"><div class="eyebrow"><span class="live-dot"></span> MENEJ PREMÝŠĽANIA. VIAC ŽIVOTA.</div><h1>Ťažké rozhodnutie? <br>Nechaj to na <em>osud.</em><span class="title-spark">✳</span></h1><p>Víno alebo fitko? Pizza alebo sushi? Pridaj svoje možnosti.<br class="desktop-break"> Najviac tri pokusy. Jedno rozhodnutie. Tvoj ďalší krok.</p></section>
     <section class="playground" aria-label="Automat na rozhodovanie">
       <aside class="choices-panel"><div class="section-number">01 <span>TVOJE MOŽNOSTI</span></div><h2>Medzi čím váhaš?</h2><p class="panel-description">Daj na stôl všetky možnosti.</p><p class="input-hint">✦ Stačí písať. Ikonku vyberieme za teba.</p><div id="choices"></div><div id="missing-photos" hidden><p id="missing-photo-note"></p><button id="open-photo-import" type="button">Pripraviť prompt a pridať obrázky</button></div><button id="add" class="add-button"><span>＋</span> Pridať možnosť <small>max. 5</small></button><div id="form-error" role="alert"></div><button id="stage-ready" class="save-dilemma">Možnosti sú pripravené →</button><p id="round-lock-note" class="round-lock-note"></p><button id="edit-dilemma" class="edit-dilemma" hidden>Upraviť možnosti pre novú dilemu</button><div class="preset-area"><span class="tiny-label">ALEBO SKÚS HOTOVÚ DILEMU</span><div class="presets">${Object.entries({evening:'Sobotný večer',cooking:'Čo uvariť?',food:'Čo si dať?',weekend:'Voľný deň',gaming:'PS5 alebo…?',productivity:'Práca a tvorba',movement:'Ako sa hýbať?',drinks:'Čo piť?',breakfast:'Raňajky',relax:'Ako vypnúť?',sweets:'Niečo sladké',chores:'Čo vybaviť?'}).map(([id,title])=>`<button data-preset="${id}" class="preset">${title}</button>`).join('')}</div></div><div class="fair-note" id="fair-note"></div><button id="save-dilemma" class="save-dilemma">＋ Uložiť dilemu</button><p id="library-status" role="status"></p></aside>
-      <div class="machine-area"><div class="stage-toolbar"><button id="stage-back" class="text-button" hidden>← Späť k možnostiam</button><button id="stage-open" class="text-button">⛶ Zväčšiť automat</button><span id="stage-question" hidden></span><span class="build-badge">TEST · v0.3.0</span><button id="stage-fullscreen" class="text-button" hidden>⛶ Celá obrazovka</button></div><div class="machine-caption"><span class="section-number">02</span><span>NECHAJ PREHOVORIŤ NÁHODU</span><span class="caption-stars">✦ ✦ ✦</span></div><div class="question-box"><label for="question">TVOJA OTÁZKA <span>nepovinné · max. 80 znakov</span></label><input id="question" maxlength="80" placeholder="Čomu venujem dnešný večer?" value="${escape(question)}"></div><div class="game-mode"><span id="mode-label"></span><span>MAX. 3 POKUSY</span></div><div id="round-progress" class="round-progress" aria-label="Počet zatočení"></div><div class="machine-and-lever"><div class="machine"><div class="machine-top"><i class="screw"></i><span>AUTOMAT NA MALÉ DILEMY</span><i class="screw"></i></div><div class="machine-title">DOBRÉ <span>✳</span> MOŽNOSTI</div><div class="reels-frame"><span class="pointer left-pointer">▸</span><div class="reels" id="reels"></div><span class="pointer right-pointer">◂</span><div class="payline"></div></div><div id="hold-controls" class="hold-controls" aria-label="Podržanie valcov"></div><div class="machine-bottom"><span id="machine-state"><i></i> PRIPRAVENÝ NA TVOJ ŤAH</span><span class="machine-edition">Č. 001 / NEKONEČNO MOŽNOSTÍ</span></div></div><button class="lever" id="lever" aria-label="Zatiahnuť páku a roztočiť"><span class="lever-knob"></span><span class="lever-stem"></span><span class="lever-base"></span></button></div><div class="machine-shadow"></div><div class="spin-controls"><button class="spin-button" id="spin"><span class="spin-star">✳</span><span id="spin-label">Nech rozhodne osud</span>${icons.arrow}</button><span class="spin-hint">alebo potiahni páku <span class="diagonal-arrow" aria-hidden="true"></span></span><p id="hold-hint" class="hold-hint"></p></div><div id="result" class="result" role="status" aria-live="polite"><span class="result-icon">✧</span><div><strong>Vesmír čaká na tvoj ťah.</strong><p>Tvoje ďalšie dobrodružstvo je jedno zatočenie ďaleko.</p></div></div></div>
+      <div class="machine-area"><div class="stage-toolbar"><button id="stage-back" class="text-button" hidden>← Späť k možnostiam</button><button id="stage-open" class="text-button">⛶ Zväčšiť automat</button><span id="stage-question" hidden></span><span class="build-badge">TEST · v0.3.0</span><button id="stage-fullscreen" class="text-button" hidden>⛶ Celá obrazovka</button></div><div class="machine-caption"><span class="section-number">02</span><span>NECHAJ PREHOVORIŤ NÁHODU</span><span class="caption-stars">✦ ✦ ✦</span></div><div class="question-box"><label for="question">TVOJA OTÁZKA <span>nepovinné · max. 80 znakov</span></label><input id="question" maxlength="80" placeholder="Čomu venujem dnešný večer?" value="${escape(question)}"></div><div class="game-mode"><span id="mode-label"></span><span>MAX. 3 POKUSY</span></div><div id="round-progress" class="round-progress" aria-label="Počet zatočení"></div><div class="machine-and-lever"><div class="machine"><div class="machine-top"><i class="screw"></i><span>AUTOMAT NA MALÉ DILEMY</span><i class="screw"></i></div><div class="machine-title">DOBRÉ <span>✳</span> MOŽNOSTI</div><div class="reels-frame"><span class="pointer left-pointer">▸</span><div class="reels" id="reels"></div><span class="pointer right-pointer">◂</span><div class="payline"></div></div><div id="hold-controls" class="hold-controls" aria-label="Podržanie valcov"></div><div class="machine-bottom"><span id="machine-state"><i></i> PRIPRAVENÝ NA TVOJ ŤAH</span><span class="machine-edition">Č. 001 / NEKONEČNO MOŽNOSTÍ</span></div></div><button class="lever" id="lever" aria-label="Zatiahnuť páku a roztočiť"><span class="lever-knob"></span><span class="lever-stem"></span><span class="lever-base"></span></button></div><div class="machine-shadow"></div><div class="spin-controls"><button class="spin-button" id="spin"><span class="spin-star">✳</span><span id="spin-label">Nech rozhodne osud</span>${icons.arrow}</button><span class="spin-hint">alebo potiahni páku <span class="diagonal-arrow" aria-hidden="true"></span></span><p id="hold-hint" class="hold-hint"></p></div><div id="result" class="result" role="status" aria-live="polite"><span class="result-icon">✧</span><div><strong>Páka čaká. Ty tiež?</strong><p>Tvoje ďalšie dobrodružstvo je jedno zatočenie ďaleko.</p></div></div></div>
     </section>
     <section class="library-section"><h2>Moje dilemy</h2><p>Ulož si vlastné možnosti alebo si uprav hotovú predvoľbu. Ukladajú sa v tomto prehliadači.</p><div id="my-dilemmas"></div></section><section class="history-section"><div class="history-heading"><h2><span>↶</span> Posledné verdikty</h2><button id="clear-history" class="text-button">Vymazať históriu</button></div><div id="history"></div></section>
   </main><footer><a class="footer-brand" href="./">osud.</a><span>Trochu náhody. Celé rozhodnutie je stále na tebe.</span><span class="footer-right">VYROBENÉ PRE NEROZHODNÝCH <span>✳</span></span></footer>
@@ -157,17 +158,41 @@ function renderRoundControls() {
   const anyHeld=round.held.some(Boolean);
   $('#hold-hint').textContent=pure && !round.done ? (round.attempts===2?'Finálové žrebovanie — teraz padne rozhodnutie.':'Všetky možnosti majú rovnakú šancu. Valce sa žrebujú nezávisle.') : round.done?'Tento verdikt je hotový. Tlačidlo Nová dilema otvorí ďalšiu otázku.':round.attempts===0?'Po prvom zatočení môžeš podržať symboly.':anyHeld?(round.attempts===2?'Posledný pokus dokončí tvoju podržanú možnosť.':'Podržané valce zostanú. Podržať môžeš len rovnaké možnosti.'):round.attempts===2?'Posledné zatočenie už vytvorí trojicu aj bez podržania.':'Podrž symboly, ktoré sa ti páčia, alebo roztoč všetky.';
 }
+const quips={
+  ready:['Páka čaká. Ty tiež?','Osud si nahrieva ruky.','Tri pokusy. Žiadny stres.'],
+  nothing:['Osud ešte váha.','Zatiaľ nič. Ale ešte nie je koniec.','Valce sa nevedia dohodnúť.'],
+  pair:['Dvaja sa zhodli. Tretí sa rozmýšľa.','Skoro. Naozaj skoro.','Blízko. Osud sa ešte pozerá.'],
+  last:['Posledný pokus. Dýchaj.','Teraz už padne rozhodnutie.'],
+  done:['Sťažnosti osud neprijíma.','Už si to vedel. Teraz je to oficiálne.','Hotovo. Aspoň sa už nemusíš trápiť.','Osud sa vyjadril. Ty môžeš ísť.']
+};
+// Deterministic per saved state, so a re-render or a reload shows the same line.
+function quip(kind: keyof typeof quips): string {
+  const list=quips[kind], seed=round.attempts*7+round.reels.reduce((a,b)=>a+b+1,0)+choices.length;
+  return list[seed%list.length];
+}
+function celebrate() {
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const area=document.querySelector<HTMLElement>('.machine-and-lever'); if(!area) return;
+  const box=document.createElement('div'); box.className='confetti'; box.setAttribute('aria-hidden','true');
+  const colors=['#ffd23f','#ff6b9d','#3ff0c0','#ffffff','#ff9a3c'];
+  for(let i=0;i<36;i++){
+    const piece=document.createElement('i');
+    piece.style.cssText=`left:${10+Math.random()*80}%;background:${colors[i%colors.length]};--dx:${Math.round(Math.random()*120-60)}px;--dy:${Math.round(180+Math.random()*320)}px;--r:${Math.round(Math.random()*720-360)}deg;animation-delay:${Math.round(Math.random()*250)}ms`;
+    box.appendChild(piece);
+  }
+  area.appendChild(box); window.setTimeout(()=>box.remove(),2200);
+}
 function renderRoundResult() {
   const winnerIndex=winningChoice(round);
   app.classList.toggle('has-winner',round.done);
   if(round.done && winnerIndex!==null) {
     const winner=choices[winnerIndex];
-    $('#result').innerHTML=`<span class="result-icon">${symbol(winner.emoji,winner.manualEmoji?undefined:winner.label)}</span><div><span class="winner-kicker">OSUD ROZHODOL! · ${round.attempts}. POKUS</span><strong>${escape(winner.label)}</strong><p>Pre túto dilemu platí verdikt. Inú otázku vyber predvoľbou alebo cez Nová dilema.</p></div><span class="winner-spark">✳</span>`;
+    $('#result').innerHTML=`<span class="result-icon">${symbol(winner.emoji,winner.manualEmoji?undefined:winner.label)}</span><div><span class="winner-kicker">OSUD ROZHODOL! · ${round.attempts}. POKUS</span><strong>${escape(winner.label)}</strong><p>${quip('done')}</p></div><span class="winner-spark">✳</span>`;
   } else if(round.attempts>0) {
     const pair=new Set(round.reels).size===2;
-    $('#result').innerHTML=`<span class="result-icon">${pair?'✦':'✧'}</span><div><strong>${pair?(round.mode==='hold'?'Dva sa zhodli. Podržíš ich?':'Dva sa zhodli. Ešte jeden pokus?'):'Osud ešte váha…'}</strong><p>${round.attempts===2?'Zostáva posledné zatočenie. Teraz už padne verdikt.':(round.mode==='hold'?'Trojica zatiaľ nepadla. Vyber, čo podržíš, a skús to znova.':'Trojica zatiaľ nepadla. Ďalší pokus znova žrebuje všetky valce.')}</p></div>`;
+    $('#result').innerHTML=`<span class="result-icon">${pair?'✦':'✧'}</span><div><strong>${round.attempts===2?quip('last'):pair?quip('pair'):quip('nothing')}</strong><p>${round.attempts===2?'Zostáva posledné zatočenie. Teraz už padne verdikt.':(round.mode==='hold'?'Trojica zatiaľ nepadla. Vyber, čo podržíš, a skús to znova.':'Trojica zatiaľ nepadla. Ďalší pokus znova žrebuje všetky valce.')}</p></div>`;
   } else {
-    $('#result').innerHTML='<span class="result-icon">✧</span><div><strong>Vesmír čaká na tvoj ťah.</strong><p>Najviac tri zatočenia. Jedna dilema menej.</p></div>';
+    $('#result').innerHTML=`<span class="result-icon">✧</span><div><strong>${quip('ready')}</strong><p>Najviac tri zatočenia. Jedna dilema menej.</p></div>`;
   }
 }
 
@@ -206,7 +231,7 @@ async function spin() {
   }
   persist(); spinning=true;
   app.classList.remove('has-winner'); app.classList.add('is-spinning'); renderRoundControls();
-  $('#result').innerHTML='<span class="result-icon thinking">✳</span><div><strong>Chvíľku, radím sa s vesmírom…</strong><p>O chvíľu uvidíš, čo padlo na valcoch.</p></div>';
+  $('#result').innerHTML='<span class="result-icon thinking">✳</span><div><strong>Osud sa radí s vesmírom…</strong><p>O chvíľu uvidíš, čo padlo na valcoch.</p></div>';
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   tone(170,.2,0,'triangle'); tone(260,.2,.08,'triangle');
   let tick=0;
@@ -222,11 +247,11 @@ async function spin() {
       const target=choices[round.reels[i]];
       strip.innerHTML=item(choices[(previous.reels[i]>=0?previous.reels[i]+choices.length-1:(i+choices.length-1))%choices.length])+Array.from({length:count},(_,j)=>item(j===0?starting:choices[(j+i)%choices.length])).join('')+item(target)+item(choices[(round.reels[i]+1)%choices.length]);
       const height=strip.querySelector<HTMLElement>('.reel-item')!.getBoundingClientRect().height;
-      const animation=strip.animate([{transform:'translateY(calc(var(--reel-peek) - var(--reel-height)))'},{transform:`translateY(calc(var(--reel-peek) - ${(count+1)*height}px))` }],{duration:reduced?250+i*100:2300+i*450,easing:'cubic-bezier(.12,.65,.16,1)',fill:'forwards'});
+      const animation=strip.animate([{transform:'translateY(calc(var(--reel-peek) - var(--reel-height)))'},{transform:`translateY(calc(var(--reel-peek) - ${(count+1)*height}px))` }],{duration:reduced?250+i*100:1900+i*500,easing:'cubic-bezier(.14,.7,.2,1.045)',fill:'forwards'});
       await animation.finished;
       strip.innerHTML=reelView(round.reels[i]); animation.cancel(); windowEl.classList.add('landed'); tone(380+i*130,.16,0,'triangle',.08);
     }));
-    if(round.done) [523.25,659.25,783.99,1046.5].forEach((f,i)=>tone(f,.4,i*.09,'sine',.09));
+    if(round.done) { [523.25,659.25,783.99,1046.5].forEach((f,i)=>tone(f,.4,i*.09,'sine',.09)); celebrate(); }
     else { tone(330,.18,0,'triangle',.04); tone(260,.2,.13,'triangle',.04); }
   } catch {
     // A cancelled animation must still display the saved outcome.

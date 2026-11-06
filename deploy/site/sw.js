@@ -1,6 +1,6 @@
 
-const CACHE="osud-pwa-764c38ad18e6b6dc";
-const FILES=["/assets/activities-B2Hs7RRA.png","/assets/food-a-Dgfo6kP8.png","/assets/food-b-CzLiPeJZ.png","/assets/index-BEKcP6Gc.js","/assets/index-DcCDjq6U.css","/assets/objects-eYLyte99.png","/icons/icon-180.png","/icons/icon-192.png","/icons/icon-512.png","/icons/icon.svg","/index.html","/manifest.webmanifest"];
+const CACHE="osud-pwa-22f9cd351ab40b3e";
+const FILES=["/assets/activities-B2Hs7RRA.png","/assets/food-a-Dgfo6kP8.png","/assets/food-b-CzLiPeJZ.png","/assets/index-C5gkKyHf.css","/assets/index-DE-pab7O.js","/assets/objects-eYLyte99.png","/icons/icon-180.png","/icons/icon-192.png","/icons/icon-512.png","/icons/icon.svg","/index.html","/manifest.webmanifest"];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES))));
 self.addEventListener('message',event=>{if(event.data==='SKIP_WAITING')self.skipWaiting();});
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('osud-pwa-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));

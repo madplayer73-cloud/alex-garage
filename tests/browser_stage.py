@@ -36,4 +36,4 @@ class StageTests(MachineBrowserCase):
                     box=self.page.locator('#result').bounding_box()
                     self.assertLessEqual(box['y']+box['height'],height)
                     expect(self.page.locator('#lever')).to_be_visible()
-                    expect(self.page.locator('.build-badge')).to_have_text('TEST · v0.3.0')
+                    expect(self.page.locator('.build-badge')).to_have_text('TEST · v0.4.0')

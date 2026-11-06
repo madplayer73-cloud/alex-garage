@@ -45,7 +45,7 @@ class ReportedBugsTests(MachineBrowserCase):
         buttons=self.page.locator('[data-preset]')
         self.assertEqual(buttons.count(),12)
         for key in buttons.evaluate_all('(els)=>els.map(e=>e.dataset.preset)'):
-            self.page.locator(f'[data-preset="{key}"]').click()
+            self.preset(key)
             expect(self.page.locator('.choice-row')).to_have_count(3)
             self.spin([0,0,0])
             self.assertTrue(self.state()['round']['done'])

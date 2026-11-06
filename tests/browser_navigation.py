@@ -48,6 +48,11 @@ class NavigationTests(unittest.TestCase):
         self.page.locator('#spin').click()
         expect(self.page.locator('#app')).not_to_have_class('is-spinning', timeout=6000)
 
+    def preset(self,key):
+        """Presets now open the start dialog and the stage: confirm, then return to the options view."""
+        self.page.locator(f'[data-preset="{key}"]').click()
+        self.page.locator('#start-confirm').click()
+        self.page.locator('#stage-back').click()
     def state(self):
         return self.page.evaluate('JSON.parse(localStorage.getItem("osud-v1"))')
 
@@ -59,7 +64,7 @@ class NavigationTests(unittest.TestCase):
         expect(button).to_be_enabled()
         expect(button).to_have_text('✳Nová dilema')
         expect(self.page.locator('#lever')).to_be_disabled()
-        self.page.locator('[data-preset="evening"]').click()
+        self.page.locator('[data-preset="evening"]').click()  # same finished dilemma: refused, no dialog
         self.assertEqual(self.state()['round']['attempts'], 1)
         expect(self.page.locator('#form-error')).to_contain_text('už má verdikt')
         button.click()
@@ -72,7 +77,7 @@ class NavigationTests(unittest.TestCase):
         self.spin()
         for key, first in [('cooking', 'Špagety'), ('food', 'Pizza'),
                            ('weekend', 'Výlet do prírody'), ('evening', 'Dať si víno')]:
-            self.page.locator(f'[data-preset="{key}"]').click()
+            self.preset(key)
             expect(self.page.get_by_role('textbox', name='Možnosť 1')).to_have_value(first)
             self.assertEqual(self.state()['round']['attempts'], 0)
             self.spin()
@@ -122,7 +127,7 @@ class NavigationTests(unittest.TestCase):
         expect(self.page.get_by_role('textbox', name='Možnosť 1')).to_be_enabled()
         self.assertEqual(self.state()['round']['attempts'], 0)
         self.spin([0, 1, 2])
-        self.page.locator('[data-preset="cooking"]').click()
+        self.preset('cooking')
         self.assertEqual(self.state()['round']['attempts'], 0)
         self.spin()
         expect(self.page.locator('#result strong')).to_have_text('Špagety')
